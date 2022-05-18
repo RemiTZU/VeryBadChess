@@ -10,9 +10,8 @@
  *
  * @param taille -> taille du menu
  * @param motifascii -> Motif ASCII que l'on choisit
- * @param temps -> Temps nécessaire à l'écriture des paramètres (optionnel)
  */
-void asciiboucle(int taille, int motifascii, float temps);
+void asciiboucle(int taille, int motifascii);
 
 /**
  * @brief Fonction qui rempli le menu avec les phrase de notre choix. Attention il faut que la taille des phrases

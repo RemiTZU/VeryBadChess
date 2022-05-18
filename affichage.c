@@ -1,7 +1,7 @@
 #include <affichage.h>
 
 
-void ecritureaffichage(char *ecriture, int motifascii, float temps)
+void ecritureaffichage(char *ecriture, int motifascii)
 {
 
     int size = strlen(ecriture);
@@ -9,7 +9,7 @@ void ecritureaffichage(char *ecriture, int motifascii, float temps)
 
     for (int i = 0; i < size; i++)
     {
-        Sleep(temps);
+        
         printf("%c", ecriture[i]);
     }
 
@@ -63,7 +63,7 @@ void asciiboucle(int taille, int motifascii, float temps)
 
     for (int i = 0; i < taille; i++)
     {
-        Sleep(temps);
+        
         printf("%c", motifascii);
     }
 }
@@ -88,10 +88,10 @@ void menu()
     for (int i = 0; i < 2; i++)
     {
 
-        Sleep(temps);
+        
         printf("%c", 186);
         asciiboucle(longueur, 219, temps);
-        Sleep(temps);
+        
         printf("%c", 186);
         printf("\n");
     }
@@ -103,10 +103,10 @@ void menu()
     for (int i = 0; i < 2; i++)
     {
 
-        Sleep(temps);
+        
         printf("%c", 186);
         asciiboucle(longueur, 219, temps);
-        Sleep(temps);
+        
         printf("%c", 186);
         printf("\n");
     }
