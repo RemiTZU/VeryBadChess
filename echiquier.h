@@ -12,8 +12,8 @@
 
 typedef enum
 {
-    VRAI = 0,
-    FAUX = 1
+    VRAI = 1,
+    FAUX = 0
 }Bool;
 
 typedef enum

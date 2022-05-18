@@ -58,7 +58,7 @@ void affichage(int taille, Piece **echiquier)
         printf("   %c", k + 66); // Affichage des coordonnées en absisses
     }
 }
-void asciiboucle(int taille, int motifascii, float temps)
+void asciiboucle(int taille, int motifascii)
 {
 
     for (int i = 0; i < taille; i++)
@@ -75,12 +75,12 @@ void menu()
     char *ecriture = "**********1.Lancer une partie**********";
     char *ecriture1 = "**********2.Relancer une partie********";
     char *ecriture2 = "**********3.Quitter********************";
-    float temps = 10;
+  
 
     system("cls");
 
     printf("%c", 201);
-    asciiboucle(longueur, ascii, temps);
+    asciiboucle(longueur, ascii);
     printf("%c", 187);
 
     printf("\n");
@@ -90,29 +90,29 @@ void menu()
 
         
         printf("%c", 186);
-        asciiboucle(longueur, 219, temps);
+        asciiboucle(longueur, 219);
         
         printf("%c", 186);
         printf("\n");
     }
 
-    ecritureaffichage(ecriture, 186, temps);
-    ecritureaffichage(ecriture1, 186, temps);
-    ecritureaffichage(ecriture2, 186, temps);
+    ecritureaffichage(ecriture, 186);
+    ecritureaffichage(ecriture1, 186);
+    ecritureaffichage(ecriture2, 186);
 
     for (int i = 0; i < 2; i++)
     {
 
         
         printf("%c", 186);
-        asciiboucle(longueur, 219, temps);
+        asciiboucle(longueur, 219);
         
         printf("%c", 186);
         printf("\n");
     }
 
     printf("%c", 200);
-    asciiboucle(longueur, ascii, temps);
+    asciiboucle(longueur, ascii);
     printf("%c", 188);
 
     printf("\n");

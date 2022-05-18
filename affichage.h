@@ -21,7 +21,7 @@ void asciiboucle(int taille, int motifascii);
  * @param motifascii -> Motif du cadre du Menu
  * @param temps -> Temps nécessaire à l'écriture des paramètres (optionnel)
  */
-void ecritureaffichage(char *ecriture, int motifascii, float temps);
+void ecritureaffichage(char *ecriture, int motifascii);
 
 /**
  * @brief Fonction qui affiche l'échiquier de la partie en cours 

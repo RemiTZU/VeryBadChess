@@ -2,7 +2,8 @@
 
 int main()
 {
-
+    // int coordonneeinit[2];
+    // int coordonneefin[2];
     int n = -1;
 
     int taille = 0;
@@ -48,9 +49,9 @@ int main()
     case(3):
         
         printf("Oh, dommage a bientot\n");
-        return 0;
+    break;
     }
    
-
+    return EXIT_SUCCESS;
 
 }
