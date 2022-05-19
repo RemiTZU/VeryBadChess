@@ -29,4 +29,17 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
  * @return Bool 
  */
 Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+
+/**
+ * @brief 
+ * 
+ * @param i 
+ * @param y 
+ * @param y0 
+ * @param x 
+ * @param x0 
+ * @param echiquier 
+ * @return Bool 
+ */
+Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier);
 #endif

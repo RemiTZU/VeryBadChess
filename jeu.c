@@ -33,7 +33,7 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier)
 }
 
 
-Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
+Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier)
 {
 
     Bool verif = FAUX;
@@ -61,14 +61,7 @@ Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** ech
             {
                 i++;
             }                                                                                           
-            if (i != abs(y - y0)) // that's mean that the bishop cross the road of an other piece on the chessboard
-            {
-                verif = FAUX;
-            }
-            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur) // To be sure that it can not eat its M8
-            {
-                verif = VRAI;
-            }                                                                                                                                                                                                    
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);                                                                                                                                                                         
         }
         if (coeff > 0 && deltaY > 0)
         {
@@ -78,14 +71,8 @@ Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** ech
             {
                 i++;
             }
-            if (i != abs(y - y0))
-            {
-                verif = FAUX;
-            }
-            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur)
-            {
-                verif = VRAI;
-            }
+
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);   
         }
         if (coeff < 0 && deltaY < 0)
         {
@@ -95,14 +82,7 @@ Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** ech
             {
                 i++;
             }
-            if (i != abs(y - y0))
-            {
-                verif = FAUX;
-            }
-            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur)
-            {
-                verif = VRAI;
-            }
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);  
         }
         if (coeff < 0 && deltaY > 0)
         {
@@ -112,16 +92,24 @@ Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** ech
             {
                 i++;
             }
-            if (i != abs(y - y0))
-            {
-                verif = FAUX;
-            }
-            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur)
-            {
-                verif = VRAI;
-            }
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);  
         }
     }
 
+    return verif;
+}
+
+Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier){
+    
+    Bool verif ;
+
+    if (i != abs(y - y0)) // that's mean that the bishop cross the road of an other piece on the chessboard
+        {
+            verif = FAUX;
+        }
+        else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur) // To be sure that it can not eat its M8
+        {
+            verif = VRAI;
+        }
     return verif;
 }
