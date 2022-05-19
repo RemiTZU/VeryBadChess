@@ -21,25 +21,24 @@ void acquisitioncoordonnees(int taille, int coordonnee[2]);
 void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
 
 /**
- * @brief 
+ * @brief Fonction permettant de dire si le mouvement donné par l'utilisateur pour un fou est correct
  * 
- * @param coordonneedepart 
- * @param coordonneearriver 
- * @param echiquier 
- * @return Bool 
+ * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
+ * @param coordonneearriver--> Coordonnée d'arriver entrée par l'utilisateur 
+ * @return Bool--> indique si le coup est possible ou non 
  */
 Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
- * @brief 
+ * @brief Fonction se répettant dans FouMouvement 
  * 
- * @param i 
- * @param y 
- * @param y0 
- * @param x 
- * @param x0 
- * @param echiquier 
- * @return Bool 
+ * @param i --> entier d'indentation
+ * @param y --> ligne d'arrivée
+ * @param y0 --> ligne de départ 
+ * @param x --> colonne d'arrivée
+ * @param x0--> colonne de départ
+ * @param echiquier--> tableau de structure de pièces 
+ * @return Bool --> indique si le coup est possible ou non 
  */
 Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier);
 #endif
