@@ -33,7 +33,7 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier)
 }
 
 
-Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier)
+Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
 
     Bool verif = FAUX;
@@ -111,5 +111,21 @@ Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier){
         {
             verif = VRAI;
         }
+    return verif;
+}
+
+Bool CavalierMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier){
+    
+    Bool verif = FAUX;
+
+    int y0 = coordonneedepart[0];
+    int x0 = coordonneedepart[1];
+    int y = coordonneearriver[0];
+    int x = coordonneearriver[1];
+
+    if(((abs(y0-y)==2 && abs(x0-x)==1) || (abs(y0-y)==1 && abs(x0-x)==2))&&(echiquier[y][x].couleur != echiquier[y0][x0].couleur)){
+        verif = VRAI;
+    }
+
     return verif;
 }

@@ -24,7 +24,8 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
  * @brief Fonction permettant de dire si le mouvement donné par l'utilisateur pour un fou est correct
  * 
  * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
- * @param coordonneearriver--> Coordonnée d'arriver entrée par l'utilisateur 
+ * @param coordonneearriver--> Coordonnée d'arriver entrée par l'utilisateur
+ * @param echiquier -->  tableau de structure de pièces 
  * @return Bool--> indique si le coup est possible ou non 
  */
 Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
@@ -41,4 +42,17 @@ Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** ech
  * @return Bool --> indique si le coup est possible ou non 
  */
 Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier);
+
+ /**
+  * @brief  Fonction permettant de dire si le mouvement donné par l'utilisateur pour un cavalier est correct
+  * 
+  * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
+  * @param coordonneearriver --> Coordonnée d'arriver entrée par l'utilisateur 
+  * @param echiquier -->  tableau de structure de pièces 
+  * @return Bool--> indique si le coup est possible ou non 
+  */
+Bool CavalierMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier);
+
+
+
 #endif
