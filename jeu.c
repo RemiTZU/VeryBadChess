@@ -31,3 +31,97 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier)
     *abscisse = *abscisse - 65;
     *ordonnee = taillechiquier - *ordonnee;
 }
+
+
+Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
+{
+
+    Bool verif = FAUX;
+
+    if (coordonneedepart[1] == coordonneearriver[1])
+    {
+        return verif; // We can't divide a number by 0, furthemore a bishop can't do this type of movement
+    }
+
+    int y0 = coordonneedepart[0];
+    int x0 = coordonneedepart[1];
+    int y = coordonneearriver[0];
+    int x = coordonneearriver[1];
+    int coeff = (y - y0) / (x - x0);
+    int deltaY = (y - y0);
+
+    if (abs(x0 - x) == abs(y0 - y))
+    {
+
+        if (coeff > 0 && deltaY < 0) // here we try to obtain the direction of the Bishop on the chessboard
+        {
+            int i = 1;
+
+            while (((x0 - i != x) && (y0 - i != y)) && (echiquier[y0 - i][x0 - i].aff == ' ')) //carefull with the notation x and y (y represents the lines et x the columns of the chessboard)
+            {
+                i++;
+            }                                                                                           
+            if (i != abs(y - y0)) // that's mean that the bishop cross the road of an other piece on the chessboard
+            {
+                verif = FAUX;
+            }
+            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur) // To be sure that it can not eat its M8
+            {
+                verif = VRAI;
+            }                                                                                                                                                                                                    
+        }
+        if (coeff > 0 && deltaY > 0)
+        {
+            int i = 1;
+
+            while (((x0 + i != x) && (y0 + i != y)) && (echiquier[y0 + i][x0 + i].aff == ' '))
+            {
+                i++;
+            }
+            if (i != abs(y - y0))
+            {
+                verif = FAUX;
+            }
+            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur)
+            {
+                verif = VRAI;
+            }
+        }
+        if (coeff < 0 && deltaY < 0)
+        {
+            int i = 1;
+
+            while (((x0 + i != x) && (y0 - i != y) && (echiquier[y0 - i][x0 + i].aff == ' ')))
+            {
+                i++;
+            }
+            if (i != abs(y - y0))
+            {
+                verif = FAUX;
+            }
+            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur)
+            {
+                verif = VRAI;
+            }
+        }
+        if (coeff < 0 && deltaY > 0)
+        {
+            int i = 1;
+
+            while (((x0 - i != x) && (y0 + i != y)) && (echiquier[y0 + i][x0 - i].aff == ' '))
+            {
+                i++;
+            }
+            if (i != abs(y - y0))
+            {
+                verif = FAUX;
+            }
+            else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur)
+            {
+                verif = VRAI;
+            }
+        }
+    }
+
+    return verif;
+}

@@ -5,7 +5,7 @@ int main()
     // int coordonneeinit[2];
     // int coordonneefin[2];
     int n = -1;
-
+    
     int taille = 0;
     char rep[20];
     menu();

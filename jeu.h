@@ -19,4 +19,14 @@ void acquisitioncoordonnees(int taille, int coordonnee[2]);
  * @param taillechiquier --> taaille de l'échiquier
  */
 void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
+
+/**
+ * @brief 
+ * 
+ * @param coordonneedepart 
+ * @param coordonneearriver 
+ * @param echiquier 
+ * @return Bool 
+ */
+Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 #endif
