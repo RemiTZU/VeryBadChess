@@ -32,6 +32,18 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier)
     *ordonnee = taillechiquier - *ordonnee;
 }
 
+void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier){
+    
+    Piece tmp;
+    tmp.aff = ' ';
+    tmp.nom = -1;
+    tmp.nom = 0;
+
+    echiquier[coordonneearriver[0]][coordonneearriver[1]] = echiquier[coordonneedepart[0]][coordonneedepart[1]];
+    echiquier[coordonneedepart[0]][coordonneedepart[1]]= tmp; 
+
+}
+
 
 Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
@@ -40,7 +52,7 @@ Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** 
 
     if (coordonneedepart[1] == coordonneearriver[1])
     {
-        return verif; // We can't divide a number by 0, furthemore a bishop can't do this type of movement
+        return verif; 
     }
 
     int y0 = coordonneedepart[0];
@@ -53,11 +65,11 @@ Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** 
     if (abs(x0 - x) == abs(y0 - y))
     {
 
-        if (coeff > 0 && deltaY < 0) // here we try to obtain the direction of the Bishop on the chessboard
+        if (coeff > 0 && deltaY < 0) 
         {
             int i = 1;
 
-            while (((x0 - i != x) && (y0 - i != y)) && (echiquier[y0 - i][x0 - i].aff == ' ')) //carefull with the notation x and y (y represents the lines et x the columns of the chessboard)
+            while (((x0 - i != x) && (y0 - i != y)) && (echiquier[y0 - i][x0 - i].aff == ' ')) 
             {
                 i++;
             }                                                                                           
@@ -103,11 +115,11 @@ Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier){
     
     Bool verif ;
 
-    if (i != abs(y - y0)) // that's mean that the bishop cross the road of an other piece on the chessboard
+    if (i != abs(y - y0)) 
         {
             verif = FAUX;
         }
-        else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur) // To be sure that it can not eat its M8
+        else if (i == abs(y - y0) && echiquier[y][x].couleur != echiquier[y0][x0].couleur) 
         {
             verif = VRAI;
         }

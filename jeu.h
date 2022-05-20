@@ -20,6 +20,17 @@ void acquisitioncoordonnees(int taille, int coordonnee[2]);
  */
 void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
 
+
+/**
+ * @brief Permet d'actualiser l'echiquier et de déplacer une pièce si le mouvement est possible
+ * 
+ * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
+ * @param coordonneearriver --> Coordonnée d'arriver entrée par l'utilisateur
+ * @param echiquier -->  tableau de structure de pièces  
+ */
+void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+
+
 /**
  * @brief Fonction permettant de dire si le mouvement donné par l'utilisateur pour un fou est correct
  * 
