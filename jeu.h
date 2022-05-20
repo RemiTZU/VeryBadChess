@@ -28,7 +28,7 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
  * @param echiquier -->  tableau de structure de pièces 
  * @return Bool--> indique si le coup est possible ou non 
  */
-Bool FouMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
  * @brief Fonction se répettant dans FouMouvement 
@@ -51,8 +51,8 @@ Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier);
   * @param echiquier -->  tableau de structure de pièces 
   * @return Bool--> indique si le coup est possible ou non 
   */
-Bool CavalierMouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier);
+Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 
-
+Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 #endif
