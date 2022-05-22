@@ -200,4 +200,44 @@ Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece**
         }
     }
     return verif;
+}
+
+Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int coup, int taille, Piece **echiquier)
+{
+
+    Bool verif = FAUX;
+    Piece tmp ; 
+    tmp.aff = ' ';
+    tmp.couleur = EMPTY;
+    tmp.nom = VIDE;
+
+    int y0 = coordonneedepart[0];
+    int x0 = coordonneedepart[1];
+    int y = coordonneearriver[0];
+    int x = coordonneearriver[1];
+
+    if (coup == 0 && y0 == taille - 2)
+    {
+        if (abs(x0 - x) == 1 && (y0 - y) == 1 && (echiquier[y][x].couleur != echiquier[y0][x0].couleur))
+        {
+
+            verif = VRAI;
+        }
+        if ((y0 - y == 2 || y0 - y == 1) && x == x0)
+        {
+            verif = VRAI;
+        }
     }
+
+    if (coup != 0  && (y0 - y) == 1 && abs(x-x0) == 1 && (echiquier[y][x].couleur != tmp.couleur)&&(echiquier[y][x].couleur!= echiquier[y0][x0].couleur))
+    {
+        verif = VRAI;
+    }
+
+    if (coup != 0 && x == x0 && (y0 - y) == 1 && (echiquier[y][x].aff == ' '))
+    {
+        verif = VRAI;
+    }
+
+    return verif;
+}

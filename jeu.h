@@ -73,4 +73,18 @@ Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Pie
  * @return Bool --> indique si le coup est possible ou non  
  */
 Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+
+/**
+ * @brief Verification des mouvements d'un Pion
+ * 
+ * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
+ * @param coordonneearriver --> Coordonnée d'arrivée entrée par l'utilisateur
+ * @param coup --> Nombre de coup jouer au cours de la partie 
+ * @param taille --> taille de l'échiquier 
+ * @param echiquier -->  tableau de structure de pièces
+ * @return Bool --> indique si le coup est possible ou non  
+ 
+ */
+Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int coup, int taille, Piece** echiquier);
+
 #endif
