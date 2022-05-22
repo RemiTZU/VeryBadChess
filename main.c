@@ -29,14 +29,15 @@ int main()
 
     scanf("%s", rep);
 
-    if (sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3|| strlen(rep)!= 1)
+    if (sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3 )
     {
         do
-        {
+        {   
+            
             printf("Trois choix possible (1,2,3)\n");
             scanf("%s", rep);
 
-        } while ((sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3 || strlen(rep)!= 1));
+        } while ((sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3));
     }
 
     switch (n)
