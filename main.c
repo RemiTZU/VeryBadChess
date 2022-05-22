@@ -28,6 +28,7 @@ int main()
     menu();
 
     scanf("%s", rep);
+    fflush(stdin);
 
     if (sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3 )
     {
@@ -36,6 +37,7 @@ int main()
             
             printf("Trois choix possible (1,2,3)\n");
             scanf("%s", rep);
+            fflush(stdin);
 
         } while ((sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3));
     }
@@ -45,6 +47,7 @@ int main()
     case (1):
         printf("quelle taille de dechiquier voulez vous ?\n");
         scanf("%s", rep);
+        fflush(stdin);
 
         if (sscanf(rep, "%d", &taille) == EOF || taille < 6 || taille > 12 )
         {
@@ -52,6 +55,7 @@ int main()
             {
                 printf("Taille echiquier possible(6/7/8/9/10/11/12) \n");
                 scanf("%s", rep);
+                fflush(stdin);
 
             } while ((sscanf(rep, "%d", &taille) == EOF || taille < 6 || taille > 12));
         }

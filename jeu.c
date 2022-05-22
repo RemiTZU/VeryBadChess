@@ -11,11 +11,13 @@ void acquisitioncoordonnees(int taille,int coordonnee[2])
     printf("rentrer une lettre pour les abcisses et un nombre pour les ordonn%ces\n", 130);
 
     scanf("%s", rep);
+    fflush(stdin);
 
     while (sscanf(rep, "%c%d", &abcissetmp, &ordonne) == EOF || (abcissetmp < 65 || abcissetmp > taille + 65) || (ordonne < 0 || ordonne > taille))
     {
         printf("Oups, il semblerait que les coordonn%ces rentr%ce ne soit pas valide.(exemple de coordonn%ces valident #%c%d# pour la taille %d par %d)\n", 130, 130, 130,65,taille,taille,taille);
         scanf("%s", rep);
+        fflush(stdin);
     }
 
     abcisse = abcissetmp;
