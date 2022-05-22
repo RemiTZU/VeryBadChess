@@ -75,9 +75,6 @@ void menu()
     char *ecriture = "**********1.Lancer une partie**********";
     char *ecriture1 = "**********2.Relancer une partie********";
     char *ecriture2 = "**********3.Quitter********************";
-  
-
-    system("cls");
 
     printf("%c", 201);
     asciiboucle(longueur, ascii);

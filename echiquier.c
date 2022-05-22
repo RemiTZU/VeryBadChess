@@ -43,8 +43,8 @@ Piece** initializeechiquier(int taille)
                 fprintf(stderr, "Les pieces n'ont pas ete attribuer");
             }
             }
-            echiquier[0][taille / 2].aff = affichagePiece[6];
-            echiquier[taille - 1][taille / 2].aff = affichagePiece[6];
+            
+            MiseEnPlaceRoi(echiquier,taille);
         }
         else
         {
@@ -100,4 +100,19 @@ void reverse(int taille, Piece **echiquier)
             echiquier[taille - i - 1][j] = tmp;
         }
     }
+}
+
+
+void MiseEnPlaceRoi(Piece** echiquier, int taille){
+
+    char affichagePiece[] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
+    
+    echiquier[0][taille / 2].aff = affichagePiece[6];
+    echiquier[taille - 1][taille / 2].aff = affichagePiece[6];
+
+    echiquier[0][taille / 2].couleur = NOIR;
+    echiquier[taille - 1][taille / 2].couleur = BLANC;
+    
+    echiquier[0][taille / 2].nom = ROI;
+    echiquier[taille - 1][taille / 2].nom = ROI;
 }

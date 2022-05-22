@@ -32,7 +32,7 @@ void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiqu
 
 
 /**
- * @brief Fonction permettant de dire si le mouvement donné par l'utilisateur pour un fou est correct
+ * @brief Verification des mouvements d'un Fou
  * 
  * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
  * @param coordonneearriver--> Coordonnée d'arriver entrée par l'utilisateur
@@ -55,15 +55,22 @@ Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** 
 Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier);
 
  /**
-  * @brief  Fonction permettant de dire si le mouvement donné par l'utilisateur pour un cavalier est correct
+  * @brief  Verification des mouvements d'un cavalier
   * 
   * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
-  * @param coordonneearriver --> Coordonnée d'arriver entrée par l'utilisateur 
+  * @param coordonneearriver --> Coordonnée d'arrivée entrée par l'utilisateur
   * @param echiquier -->  tableau de structure de pièces 
   * @return Bool--> indique si le coup est possible ou non 
   */
 Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
-
+/**
+ * @brief Verification des mouvements d'une tour
+ * 
+ * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
+ * @param coordonneearriver --> Coordonnée d'arrivée entrée par l'utilisateur
+ * @param echiquier -->  tableau de structure de pièces
+ * @return Bool --> indique si le coup est possible ou non  
+ */
 Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 #endif

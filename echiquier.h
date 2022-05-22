@@ -67,4 +67,12 @@ void freechiquier(int taille, Piece ***echiquier);
  * @param echiquier -> Tableau à  deux dimensions de structure
  */
 void reverse(int taille, Piece **echiquier);
+
+/**
+ * @brief Utile dans InitializeEchiquier pour placer le roi à chaque début de partie
+ * 
+ * @param echiquier--> structure de Pièce
+ * @param taille --> taille de l'echiquier 
+ */
+void MiseEnPlaceRoi(Piece** echiquier, int taille);
 #endif
