@@ -42,7 +42,7 @@ Piece** initializeechiquier(int taille)
             {
                 fprintf(stderr, "Les pieces n'ont pas ete attribuer");
             }
-            }
+        }
             
             MiseEnPlaceRoi(echiquier,taille);
         }

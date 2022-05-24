@@ -115,7 +115,7 @@ Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** 
 
 Bool VerificationFou(int i,int y, int y0,int x,int x0,Piece** echiquier){
     
-    Bool verif ;
+    Bool verif = FAUX ;
 
     if (i != abs(y - y0)) 
         {
