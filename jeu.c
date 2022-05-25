@@ -274,3 +274,109 @@ Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece**
     return verif;
 
 }
+
+Bool ReineVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier){
+    
+    Bool verif = FAUX;
+
+    int y0 = coordonneedepart[0];
+    int x0 = coordonneedepart[1];
+    int y = coordonneearriver[0];
+    int x = coordonneearriver[1];
+
+    if (abs(x0 - x) == abs(y0 - y))
+    {
+        int coeff = (y - y0) / (x - x0);
+        int deltaY = (y - y0); 
+
+        if (coeff > 0 && deltaY < 0) 
+        {
+            int i = 1;
+
+            while (((x0 - i != x) && (y0 - i != y)) && (echiquier[y0 - i][x0 - i].aff == ' ')) 
+            {
+                i++;
+            }                                                                                           
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);                                                                                                                                                                         
+        }
+        if (coeff > 0 && deltaY > 0)
+        {
+            int i = 1;
+
+            while (((x0 + i != x) && (y0 + i != y)) && (echiquier[y0 + i][x0 + i].aff == ' '))
+            {
+                i++;
+            }
+
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);   
+        }
+        if (coeff < 0 && deltaY < 0)
+        {
+            int i = 1;
+
+            while (((x0 + i != x) && (y0 - i != y) && (echiquier[y0 - i][x0 + i].aff == ' ')))
+            {
+                i++;
+            }
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);  
+        }
+        if (coeff < 0 && deltaY > 0)
+        {
+            int i = 1;
+
+            while (((x0 - i != x) && (y0 + i != y)) && (echiquier[y0 + i][x0 - i].aff == ' '))
+            {
+                i++;
+            }
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);  
+        }
+    }
+    if(x == x0){
+        int i = 1;
+        if(y<y0){
+            while((y != y0-i)&&echiquier[y0-i][x].aff == ' '){
+                i++;
+            }
+            if ((i == abs(y0-y)) && (echiquier[y][x].couleur != echiquier[y0][x0].couleur))
+            {
+                verif = VRAI;
+            }
+            
+        }
+        if(y>y0){
+            while((y != y0+i)&&echiquier[y0+i][x].aff == ' '){
+                i++;
+            }
+            if ((i == abs(y0-y)) && (echiquier[y][x].couleur != echiquier[y0][x0].couleur))
+            {
+                verif =VRAI;
+            }
+            
+        }
+    }
+    if(y0 == y){
+        int i = 1;
+        if(x<x0){
+            while((x != x0-i)&&echiquier[y][x0-i].aff == ' '){
+                i++;
+            }
+            if ((i == abs(x0-x)) && (echiquier[y][x].couleur != echiquier[y0][x0].couleur))
+            {
+                verif = VRAI;
+            }
+            
+        }
+        if(x>x0){
+            while((x != x0+i)&&echiquier[y][x0+i].aff == ' '){
+                i++;
+            }
+            if ((i == abs(x0-x)) && (echiquier[y][x].couleur != echiquier[y0][x0].couleur))
+            {
+                verif =VRAI;
+            }
+            
+        }
+    }
+    
+    return verif;
+}

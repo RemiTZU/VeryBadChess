@@ -96,6 +96,16 @@ Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int tai
  */
 Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
+/**
+ * @brief Verification des mouvements d'une Reine
+ * 
+ * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
+ * @param coordonneearriver--> Coordonnée d'arrivée entrée par l'utilisateur 
+ * @param echiquier -->  tableau de structure de pièces
+ * @return Bool --> indique si le coup est possible ou non
+ */
+Bool ReineVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+
 #endif
 
 
