@@ -85,6 +85,9 @@ Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece *
  * @return Bool --> indique si le coup est possible ou non
 
  */
-Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int coup, int taille, Piece **echiquier);
+Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece **echiquier);
 
 #endif
+
+
+

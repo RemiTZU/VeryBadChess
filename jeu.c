@@ -211,8 +211,9 @@ Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece *
     return verif;
 }
 
-Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int coup, int taille, Piece **echiquier)
+Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece **echiquier)
 {
+
     Bool verif = FAUX;
     Piece tmp;
     tmp.aff = ' ';
@@ -224,10 +225,11 @@ Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int cou
     int y = coordonneearriver[0];
     int x = coordonneearriver[1];
 
-    if (coup == 0 && y0 == taille - 2)
+    if (echiquier[y0][x0].coup == 0 && y0 == taille - 2)
     {
         if (abs(x0 - x) == 1 && (y0 - y) == 1 && (echiquier[y][x].couleur != echiquier[y0][x0].couleur))
         {
+
             verif = VRAI;
         }
         if ((y0 - y == 2 || y0 - y == 1) && x == x0)
@@ -236,13 +238,13 @@ Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int cou
         }
     }
 
-    if (coup != 0 && (y0 - y) == 1 && abs(x - x0) == 1 && (echiquier[y][x].couleur != tmp.couleur) &&
+    if (echiquier[y0][x0].coup != 0 && (y0 - y) == 1 && abs(x - x0) == 1 && (echiquier[y][x].couleur != tmp.couleur) &&
         (echiquier[y][x].couleur != echiquier[y0][x0].couleur))
     {
         verif = VRAI;
     }
 
-    if (coup != 0 && x == x0 && (y0 - y) == 1 && (echiquier[y][x].aff == ' '))
+    if (echiquier[y0][x0].coup != 0 && x == x0 && (y0 - y) == 1 && (echiquier[y][x].aff == ' '))
     {
         verif = VRAI;
     }
