@@ -24,11 +24,13 @@ Piece** initializeechiquier(int taille)
 
                         echiquier[i][j].couleur = NOIR;
                         echiquier[i][j].nom = (rand() % 5 + 1);
+                        echiquier[i][j].coup = 0;
                     }
                     else if (i >= taille - 2)
                     {
                         echiquier[i][j].couleur = BLANC;
                         echiquier[i][j].nom = (rand() % 5 + 1);
+                        echiquier[i][j].coup = 0;
                     }
                     else
                     {

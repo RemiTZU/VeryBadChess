@@ -39,6 +39,7 @@ typedef struct
     Nom nom;
     Couleur couleur;
     char aff;
+    int coup;
 
 } Piece;
 
