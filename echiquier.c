@@ -1,11 +1,11 @@
 #include <echiquier.h>
 
-Piece **initializeechiquier(int taille)
+Piece** initializeechiquier(int taille)
 {
 
     char affichagePiece[] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
 
-    Piece** echiquier = (Piece **)malloc(sizeof(Piece *) * taille);
+    Piece** echiquier = (Piece**)malloc(sizeof(Piece*) * taille);
 
     if (echiquier != NULL)
     {
@@ -13,7 +13,7 @@ Piece **initializeechiquier(int taille)
         for (int i = 0; i < taille; i++)
         {
 
-            echiquier[i] = (Piece *)malloc(sizeof(Piece) * taille);
+            echiquier[i] = (Piece*)malloc(sizeof(Piece) * taille);
 
             if (echiquier[i] != NULL)
             {
@@ -54,10 +54,10 @@ Piece **initializeechiquier(int taille)
     return echiquier;
 }
 
-void freechiquier(int taille, Piece ***echiquier)
+void freechiquier(int taille, Piece*** echiquier)
 {
 
-    if (*echiquier != NULL)
+    if (echiquier != NULL)
     {
         for (int i = 0; i < taille; i++)
         {
