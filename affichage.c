@@ -1,6 +1,5 @@
 #include <affichage.h>
 
-
 void ecritureaffichage(char *ecriture, int motifascii)
 {
 
@@ -9,7 +8,7 @@ void ecritureaffichage(char *ecriture, int motifascii)
 
     for (int i = 0; i < size; i++)
     {
-        
+
         printf("%c", ecriture[i]);
     }
 
@@ -37,7 +36,10 @@ void affichage(int taille, Piece **echiquier)
 
         for (int j = 0; j < taille; j++)
         {
-            printf("[%c%c]", echiquier[i][j].aff, echiquier[i][j].couleur == BLANC ? 'B' : echiquier[i][j].couleur == NOIR ? 'N': ' ');
+            printf("[%c%c]", echiquier[i][j].aff,
+                   echiquier[i][j].couleur == BLANC  ? 'B'
+                   : echiquier[i][j].couleur == NOIR ? 'N'
+                                                     : ' ');
         }
 
         printf("\n");
@@ -63,7 +65,7 @@ void asciiboucle(int taille, int motifascii)
 
     for (int i = 0; i < taille; i++)
     {
-        
+
         printf("%c", motifascii);
     }
 }
@@ -85,10 +87,9 @@ void menu()
     for (int i = 0; i < 2; i++)
     {
 
-        
         printf("%c", 186);
         asciiboucle(longueur, 219);
-        
+
         printf("%c", 186);
         printf("\n");
     }
@@ -100,10 +101,9 @@ void menu()
     for (int i = 0; i < 2; i++)
     {
 
-        
         printf("%c", 186);
         asciiboucle(longueur, 219);
-        
+
         printf("%c", 186);
         printf("\n");
     }
@@ -114,4 +114,3 @@ void menu()
 
     printf("\n");
 }
-

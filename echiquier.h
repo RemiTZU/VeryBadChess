@@ -1,27 +1,25 @@
 #ifndef ECHIQUIERHEADER
 #define ECHIQUIERHEADER
 
-
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
-#include <windows.h>
-#include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <windows.h>
 
 typedef enum
 {
     VRAI = 1,
     FAUX = 0
-}Bool;
+} Bool;
 
 typedef enum
 {
     BLANC = 0,
     NOIR = 1,
-    EMPTY= -1
+    EMPTY = -1
 } Couleur;
 
 typedef enum
@@ -53,7 +51,7 @@ typedef struct
 Piece **initializeechiquier(int taille);
 
 /**
- * @brief Libère la mémoire alloué pour l'échiquier 
+ * @brief Libère la mémoire alloué pour l'échiquier
  *
  * @param taille -> taille de l'échiquier
  * @param echiquier -> Tableau à  deux dimensions de structures
@@ -70,9 +68,9 @@ void reverse(int taille, Piece **echiquier);
 
 /**
  * @brief Utile dans InitializeEchiquier pour placer le roi à chaque début de partie
- * 
+ *
  * @param echiquier--> structure de Pièce
- * @param taille --> taille de l'echiquier 
+ * @param taille --> taille de l'echiquier
  */
-void MiseEnPlaceRoi(Piece** echiquier, int taille);
+void MiseEnPlaceRoi(Piece **echiquier, int taille);
 #endif

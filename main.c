@@ -1,7 +1,7 @@
 #include <affichage.h>
 
 int main()
-{   
+{
     // int coordonneeinit[2];
     // int coordonneefin[2];
     int n = -1;
@@ -30,11 +30,11 @@ int main()
     scanf("%s", rep);
     fflush(stdin);
 
-    if (sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3 )
+    if (sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3)
     {
         do
-        {   
-            
+        {
+
             printf("Trois choix possible (1,2,3)\n");
             scanf("%s", rep);
             fflush(stdin);
@@ -49,7 +49,7 @@ int main()
         scanf("%s", rep);
         fflush(stdin);
 
-        if (sscanf(rep, "%d", &taille) == EOF || taille < 6 || taille > 12 )
+        if (sscanf(rep, "%d", &taille) == EOF || taille < 6 || taille > 12)
         {
             do
             {
@@ -63,17 +63,16 @@ int main()
         system("cls");
         Piece **echiquier = initializeechiquier(taille);
         affichage(taille, echiquier);
-        // Acompleter 
+        // Acompleter
         freechiquier(taille, &echiquier);
-    case(2):
-    //completer
-    break;
-    case(3):
-        
-        printf("Oh, dommage a bientot\n");
-    break;
-    }
-   
-    return EXIT_SUCCESS;
+    case (2):
+        // completer
+        break;
+    case (3):
 
+        printf("Oh, dommage a bientot\n");
+        break;
+    }
+
+    return EXIT_SUCCESS;
 }

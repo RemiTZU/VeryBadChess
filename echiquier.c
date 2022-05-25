@@ -1,11 +1,11 @@
 #include <echiquier.h>
 
-Piece** initializeechiquier(int taille)
+Piece **initializeechiquier(int taille)
 {
 
     char affichagePiece[] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
 
-    Piece** echiquier = (Piece **)malloc(sizeof(Piece *) * taille);
+    Piece **echiquier = (Piece **)malloc(sizeof(Piece *) * taille);
 
     if (echiquier != NULL)
     {
@@ -37,24 +37,24 @@ Piece** initializeechiquier(int taille)
                     }
                     echiquier[i][j].aff = affichagePiece[echiquier[i][j].nom];
                 }
-
-            }else
+            }
+            else
             {
                 fprintf(stderr, "Les pieces n'ont pas ete attribuer");
             }
         }
-            
-            MiseEnPlaceRoi(echiquier,taille);
-        }
-        else
-        {
-            fprintf(stderr, "segmentation fault");
-        }
 
-        return echiquier;
+        MiseEnPlaceRoi(echiquier, taille);
+    }
+    else
+    {
+        fprintf(stderr, "segmentation fault");
+    }
+
+    return echiquier;
 }
 
-void freechiquier(int taille, Piece*** echiquier)
+void freechiquier(int taille, Piece ***echiquier)
 {
 
     if (*echiquier != NULL)
@@ -102,17 +102,17 @@ void reverse(int taille, Piece **echiquier)
     }
 }
 
-
-void MiseEnPlaceRoi(Piece** echiquier, int taille){
+void MiseEnPlaceRoi(Piece **echiquier, int taille)
+{
 
     char affichagePiece[] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
-    
+
     echiquier[0][taille / 2].aff = affichagePiece[6];
     echiquier[taille - 1][taille / 2].aff = affichagePiece[6];
 
     echiquier[0][taille / 2].couleur = NOIR;
     echiquier[taille - 1][taille / 2].couleur = BLANC;
-    
+
     echiquier[0][taille / 2].nom = ROI;
     echiquier[taille - 1][taille / 2].nom = ROI;
 }

@@ -1,7 +1,6 @@
 #ifndef AFFICHAGEHEADER
 #define AFFICHAGEHEADER
 
-
 #include <echiquier.h>
 #include <jeu.h>
 
@@ -24,19 +23,17 @@ void asciiboucle(int taille, int motifascii);
 void ecritureaffichage(char *ecriture, int motifascii);
 
 /**
- * @brief Fonction qui affiche l'échiquier de la partie en cours 
- * 
- * @param taille -> taille de l'échiquier 
- * @param echiquier -> Tableau  à  deux dimensions de structure 
+ * @brief Fonction qui affiche l'échiquier de la partie en cours
+ *
+ * @param taille -> taille de l'échiquier
+ * @param echiquier -> Tableau  à  deux dimensions de structure
  */
-void affichage(int taille, Piece** echiquier);
+void affichage(int taille, Piece **echiquier);
 
 /**
  * @brief Affiche le menu du jeu Very Bad Chess
  *
  */
 void menu();
-
-
 
 #endif
