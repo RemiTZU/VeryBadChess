@@ -33,13 +33,13 @@ void acquisitioncoordonnees(int taille, int coordonnee[2])
     coordonnee[1] = abcisse;
 }
 
-void switchbase(int *abscisse, int *ordonnee, int taillechiquier)
+void switchbase(int* abscisse, int* ordonnee, int taillechiquier)
 {
     *abscisse = *abscisse - 65;
     *ordonnee = taillechiquier - *ordonnee;
 }
 
-void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier)
+void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
     Piece tmp;
     tmp.aff = ' ';
@@ -50,7 +50,7 @@ void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiqu
     echiquier[coordonneedepart[0]][coordonneedepart[1]] = tmp;
 }
 
-Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier)
+Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
     Bool verif = FAUX;
 
@@ -114,7 +114,7 @@ Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **
     return verif;
 }
 
-Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece **echiquier)
+Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece** echiquier)
 {
     Bool verif = FAUX;
 
@@ -129,7 +129,7 @@ Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece **echiquier)
     return verif;
 }
 
-Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier)
+Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
     Bool verif = FAUX;
 
@@ -147,7 +147,7 @@ Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Pie
     return verif;
 }
 
-Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier)
+Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
     Bool verif = FAUX;
 
@@ -211,7 +211,7 @@ Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece *
     return verif;
 }
 
-Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece **echiquier)
+Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece** echiquier)
 {
 
     Bool verif = FAUX;

@@ -20,7 +20,7 @@ void acquisitioncoordonnees(int taille, int coordonnee[2]);
  * @param ordonnee --> ordonnée de l'échiquier (ligne)
  * @param taillechiquier --> taaille de l'échiquier
  */
-void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
+void switchbase(int* abscisse, int* ordonnee, int taillechiquier);
 
 /**
  * @brief Permet d'actualiser l'echiquier et de déplacer une pièce si le mouvement est possible
@@ -29,7 +29,7 @@ void switchbase(int *abscisse, int *ordonnee, int taillechiquier);
  * @param coordonneearriver --> Coordonnée d'arriver entrée par l'utilisateur
  * @param echiquier -->  tableau de structure de pièces
  */
-void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier);
+void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'un Fou
@@ -39,7 +39,7 @@ void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece **echiqu
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool--> indique si le coup est possible ou non
  */
-Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier);
+Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
  * @brief Fonction se répettant dans FouMouvement
@@ -52,7 +52,7 @@ Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **
  * @param echiquier--> tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
  */
-Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece **echiquier);
+Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece** echiquier);
 
 /**
  * @brief  Verification des mouvements d'un cavalier
@@ -62,7 +62,7 @@ Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece **echiquier);
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool--> indique si le coup est possible ou non
  */
-Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier);
+Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'une tour
@@ -72,7 +72,7 @@ Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Pie
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
  */
-Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece **echiquier);
+Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'un Pion
@@ -84,7 +84,7 @@ Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece *
  * @return Bool --> indique si le coup est possible ou non
 
  */
-Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece **echiquier);
+Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'un Roi
