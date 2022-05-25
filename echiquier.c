@@ -36,6 +36,7 @@ Piece** initializeechiquier(int taille)
                     {
                         echiquier[i][j].couleur = EMPTY;
                         echiquier[i][j].nom = VIDE;
+                        echiquier[i][j].coup = 0;
                     }
                     echiquier[i][j].aff = affichagePiece[echiquier[i][j].nom];
                 }
@@ -117,4 +118,7 @@ void MiseEnPlaceRoi(Piece **echiquier, int taille)
 
     echiquier[0][taille / 2].nom = ROI;
     echiquier[taille - 1][taille / 2].nom = ROI;
+
+    echiquier[0][taille / 2].coup = 0;
+    echiquier[taille - 1][taille / 2].coup= 0;
 }
