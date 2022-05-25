@@ -67,7 +67,7 @@ void freechiquier(int taille, Piece*** echiquier)
                 (*echiquier)[i] = NULL;
             }
         }
-        free(*echiquier);
+        free(*echiquier);   
         *echiquier = NULL;
     }
 }
