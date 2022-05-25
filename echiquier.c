@@ -5,7 +5,7 @@ Piece **initializeechiquier(int taille)
 
     char affichagePiece[] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
 
-    Piece **echiquier = (Piece **)malloc(sizeof(Piece *) * taille);
+    Piece** echiquier = (Piece **)malloc(sizeof(Piece *) * taille);
 
     if (echiquier != NULL)
     {
