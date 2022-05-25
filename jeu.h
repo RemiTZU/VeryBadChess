@@ -79,13 +79,22 @@ Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece *
  *
  * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
  * @param coordonneearriver --> Coordonnée d'arrivée entrée par l'utilisateur
- * @param coup --> Nombre de coup jouer au cours de la partie
  * @param taille --> taille de l'échiquier
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
 
  */
 Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece **echiquier);
+
+/**
+ * @brief Verification des mouvements d'un Roi
+ * 
+ * @param coordonneedepart --> Coordonnée de départ entrée par l'utilisateur
+ * @param coordonneearriver --> Coordonnée d'arrivée entrée par l'utilisateur
+ * @param echiquier -->  tableau de structure de pièces
+ * @return Bool --> indique si le coup est possible ou non
+ */
+Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 #endif
 

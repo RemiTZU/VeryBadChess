@@ -251,3 +251,26 @@ Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int tai
 
     return verif;
 }
+
+
+Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier){
+       
+    Bool verif = FAUX;
+
+    int y0 = coordonneedepart[0];
+    int x0 = coordonneedepart[1];
+    int y = coordonneearriver[0];
+    int x = coordonneearriver[1];
+
+    if((x0 == x && abs(y0-y)==1 && echiquier[y0][x0].couleur != echiquier[y][x].couleur)||(y0 == y && abs(x0-x)==1 && echiquier[y0][x0].couleur != echiquier[y][x].couleur)){
+        
+        verif = VRAI;
+    }else{
+        if((abs(x0-x)==abs(y0-y)) && echiquier[y0][x0].couleur != echiquier[y][x].couleur ){
+            verif = VRAI ; 
+        }
+    }
+
+    return verif;
+
+}
