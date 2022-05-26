@@ -40,7 +40,7 @@ typedef struct
     Couleur couleur;
     char aff;
     int coup;
-
+ 
 } Piece;
 
 /**
