@@ -105,7 +105,7 @@ void reverse(int taille, Piece **echiquier)
     }
 }
 
-void MiseEnPlaceRoi(Piece **echiquier, int taille)
+void MiseEnPlaceRoi(Piece** echiquier, int taille)
 {
 
     char affichagePiece[] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
