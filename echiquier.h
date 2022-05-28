@@ -8,8 +8,10 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef _WIN32
-#include <windows.h>
+#ifdef __unix__ 
+# include <unistd.h>
+#elif defined _WIN32 
+# include <windows.h>
 #endif
 
 typedef enum
