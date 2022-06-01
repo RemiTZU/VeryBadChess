@@ -475,7 +475,7 @@ int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur Mise
 
                     Coordonne[0] = i;
                     Coordonne[1] = j;
-                    verif = MouvementPieceEchec(TailleTabEchec, Coordonne, CoordonneeRoi, echiquier);
+                    verif = MouvementPieceEchec(taille, Coordonne, CoordonneeRoi, echiquier);
 
                     if (verif)
                     {
