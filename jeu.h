@@ -104,7 +104,40 @@ Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece**
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
  */
-Bool ReineVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool DameVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+
+/**
+ * @brief Donne la position du Roi à l'instant t
+ * 
+ * @param CoordonneeRoi --> Coordonnée du roi à modifier après mouvement
+ * @param Roi --> Couleur du Roi en question
+ * @param taille--> taille de l'échiquier (6 x 6 par exemple) 
+ * @param echiquier --> Structure de Piece 
+ */
+void PositionRoi(int CoordonneeRoi[2], Couleur Roi, int taille, Piece** echiquier);
+
+/**
+ * @brief Fonction utile pour la fonction EchecRoi, regroupe les mouvements de toutes les pièces 
+ * 
+ * @param taille --> taille de l'échiquier (6 x 6 par exemple) 
+ * @param coordonnee --> Coordonnée de la case actuelle où l'on veut appliquer la fonction
+ * @param coordonneeRoi--> Coordonnées aux quelles on vérifie si le roi peut être en échec   
+ * @param echiquier -->  Structure de Piece 
+ * @return Bool --> Indique si le roi est en echec par la pièce concernée 
+ */
+Bool MouvementPieceEchec(int taille,int coordonnee[2],int coordonneeRoi[2],Piece** echiquier);
+
+/**
+ * @brief Fonction qui indique si le roi d'une couleur (NOIR ou BLANC) est en échec au moment donné
+ * 
+ * @param taille --> taille de l'échiquier (6 x 6 par exemple)  
+ * @param CoordonneeRoi --> Coordonnées du Roi dont on vérifie l'echec potentiel 
+ * @param echiquier -->  Structure de Piece 
+ * @param MiseEnEchec --> Couleur du Roi mis en échec potentiel
+ * @param MetEnEchec --> Couleur de la pièce qui met en échec 
+ * @return int** --> tableau de deux dimensions de int qui contient les coordonnées de chaque pièce mettant en échec le roi 
+ */
+int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec);
 
 #endif
 

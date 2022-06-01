@@ -1,5 +1,7 @@
 #include <jeu.h>
 
+
+
 void acquisitioncoordonnees(int taille, int coordonnee[2])
 {
     char rep[50];
@@ -49,6 +51,8 @@ void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiqu
     echiquier[coordonneearriver[0]][coordonneearriver[1]] = echiquier[coordonneedepart[0]][coordonneedepart[1]];
     echiquier[coordonneedepart[0]][coordonneedepart[1]] = tmp;
 }
+
+
 
 Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
@@ -114,6 +118,8 @@ Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** 
     return verif;
 }
 
+
+
 Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece** echiquier)
 {
     Bool verif = FAUX;
@@ -128,6 +134,8 @@ Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece** echiquier)
     }
     return verif;
 }
+
+
 
 Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
@@ -146,6 +154,8 @@ Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Pie
 
     return verif;
 }
+
+
 
 Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier)
 {
@@ -253,6 +263,8 @@ Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int tai
 }
 
 
+
+
 Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier){
        
     Bool verif = FAUX;
@@ -275,7 +287,9 @@ Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece**
 
 }
 
-Bool ReineVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier){
+
+
+Bool DameVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier){
     
     Bool verif = FAUX;
 
@@ -297,7 +311,7 @@ Bool ReineVerification(int coordonneedepart[2], int coordonneearriver[2], Piece*
             {
                 i++;
             }                                                                                           
-            verif = VerificationFou(i,y,y0,x,x0,echiquier);                                                                                                                                                                         
+            verif = VerificationFou(i,y,y0,x,x0,echiquier); // La dame ayant une combianaison des mouvements du fou et de la tour, nous avons réutilisé la fonction seravant pour le fou                                                                                                                                                                  
         }
         if (coeff > 0 && deltaY > 0)
         {
@@ -308,7 +322,7 @@ Bool ReineVerification(int coordonneedepart[2], int coordonneearriver[2], Piece*
                 i++;
             }
 
-            verif = VerificationFou(i,y,y0,x,x0,echiquier);   
+            verif = VerificationFou(i,y,y0,x,x0,echiquier);    
         }
         if (coeff < 0 && deltaY < 0)
         {
@@ -379,4 +393,117 @@ Bool ReineVerification(int coordonneedepart[2], int coordonneearriver[2], Piece*
     }
     
     return verif;
+}
+
+
+
+void PositionRoi(int CoordonneeRoi[2], Couleur Roi, int taille, Piece** echiquier)
+{
+
+    for (int i = 0; i < taille; i++)
+    {
+        for (int j = 0; j < taille; j++)
+        {
+            if (echiquier[i][j].couleur == Roi && echiquier[i][j].nom == ROI)
+            {
+                CoordonneeRoi[0] = i;
+                CoordonneeRoi[1] = j;
+               
+            }
+        }
+    }
+}
+
+
+Bool MouvementPieceEchec(int taille,int coordonnee[2],int coordonneeRoi[2],Piece** echiquier){
+    
+    int l = coordonnee[0]; // l pour lignes
+    int c = coordonnee[1]; // c pour colonnes 
+    Bool verif = FAUX;
+    
+    if (echiquier[l][c].nom == PION)
+    {
+       verif = PionVerification(coordonnee,coordonneeRoi,taille, echiquier);
+    }
+    if (echiquier[l][c].nom == CAVALIER)
+    {
+       verif = CavalierVerification(coordonnee,coordonneeRoi,echiquier);
+    }
+    if (echiquier[l][c].nom == FOU)
+    {
+       verif = FouVerification(coordonnee,coordonneeRoi, echiquier);
+    }
+    if (echiquier[l][c].nom == TOUR)
+    {
+       verif = TourVerification(coordonnee,coordonneeRoi,echiquier);
+    }
+    if (echiquier[l][c].nom ==DAME)
+    {
+       verif = DameVerification(coordonnee,coordonneeRoi,echiquier);
+    }
+    
+    if (echiquier[l][c].nom ==ROI)
+    {
+       verif = RoiVeerification(coordonnee,coordonneeRoi,echiquier);
+    }
+
+   return verif;
+}
+
+
+
+int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec)
+{
+
+    Bool verif = FAUX;
+    int Coordonne[2];
+    int TailleTabEchec = 1;
+
+    int** TabPieceEchec = (int **)malloc(sizeof(int) * TailleTabEchec);
+
+    if (TabPieceEchec != NULL)
+    {
+        *TabPieceEchec = NULL;
+        for (int i = 0; i < TailleTabEchec; i++)
+        {
+
+            for (int j = 0; j < TailleTabEchec; j++)
+            {
+                verif = FAUX;
+                if (echiquier[i][j].couleur == MetEnEchec && echiquier[i][j].aff != ' ')
+                {
+
+                    Coordonne[0] = i;
+                    Coordonne[1] = j;
+                    verif = MouvementPieceEchec(TailleTabEchec, Coordonne, CoordonneeRoi, echiquier);
+
+                    if (verif)
+                    {
+                        if (TailleTabEchec <= 1)
+                        {
+                            *TabPieceEchec = (int *)malloc(sizeof(int) * 2);
+                            TabPieceEchec[TailleTabEchec][0] = i;
+                            TabPieceEchec[TailleTabEchec][1] = j;
+                            TailleTabEchec++;
+                        }
+                        else
+                        {
+                            TabPieceEchec = realloc(TabPieceEchec, sizeof(int) * TailleTabEchec);
+                            TabPieceEchec[TailleTabEchec][0] = i;
+                            TabPieceEchec[TailleTabEchec][1] = j;
+                            TailleTabEchec++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (*TabPieceEchec == NULL)
+    {
+        free(TabPieceEchec);
+        TabPieceEchec = NULL;
+    }
+
+    return TabPieceEchec;
 }
