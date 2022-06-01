@@ -464,10 +464,10 @@ int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur Mise
     if (TabPieceEchec != NULL)
     {
         *TabPieceEchec = NULL;
-        for (int i = 0; i < TailleTabEchec; i++)
+        for (int i = 0; i < taille; i++)
         {
 
-            for (int j = 0; j < TailleTabEchec; j++)
+            for (int j = 0; j < taille; j++)
             {
                 verif = FAUX;
                 if (echiquier[i][j].couleur == MetEnEchec && echiquier[i][j].aff != ' ')
@@ -482,15 +482,15 @@ int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur Mise
                         if (TailleTabEchec <= 1)
                         {
                             *TabPieceEchec = (int *)malloc(sizeof(int) * 2);
-                            TabPieceEchec[TailleTabEchec][0] = i;
-                            TabPieceEchec[TailleTabEchec][1] = j;
+                            TabPieceEchec[TailleTabEchec-1][0] = i;
+                            TabPieceEchec[TailleTabEchec-1][1] = j;
                             TailleTabEchec++;
                         }
                         else
                         {
                             TabPieceEchec = realloc(TabPieceEchec, sizeof(int) * TailleTabEchec);
-                            TabPieceEchec[TailleTabEchec][0] = i;
-                            TabPieceEchec[TailleTabEchec][1] = j;
+                            TabPieceEchec[TailleTabEchec-1][0] = i;
+                            TabPieceEchec[TailleTabEchec-1][1] = j;
                             TailleTabEchec++;
                         }
                     }
