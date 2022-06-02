@@ -452,46 +452,201 @@ Bool MouvementPieceEchec(int taille,int coordonnee[2],int coordonneeRoi[2],Piece
 
 
 
-int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec)
+int** EchecRoi(int taille, int CoordonneRoi[2], Piece** echiquier,Couleur MiseEnEchec, Couleur MetEnEchec, int* tailleTabtmp)
 {
-
+    
     Bool verif = FAUX;
     int Coordonne[2];
-    int TailleTabEchec = 1;
+    *tailleTabtmp = 1;
 
-    int** TabPieceEchec = (int **)malloc(sizeof(int) * TailleTabEchec);
+    int** TabPieceEchec = (int**)malloc(sizeof(int)*(*tailleTabtmp));
 
-    if (TabPieceEchec != NULL)
-    {
+    if(TabPieceEchec != NULL){
         *TabPieceEchec = NULL;
         for (int i = 0; i < taille; i++)
         {
 
             for (int j = 0; j < taille; j++)
-            {
-                verif = FAUX;
+            {   verif = FAUX;
                 if (echiquier[i][j].couleur == MetEnEchec && echiquier[i][j].aff != ' ')
-                {
-
+                {   
+                    
                     Coordonne[0] = i;
                     Coordonne[1] = j;
-                    verif = MouvementPieceEchec(taille, Coordonne, CoordonneeRoi, echiquier);
+                    verif = MouvementPieceEchec(taille,Coordonne,CoordonneRoi,echiquier);
+                    
+                    if(verif) {
+                        if((*tailleTabtmp) <= 1){
+                            *TabPieceEchec = (int*)malloc(sizeof(int)*2);
+                            TabPieceEchec[(*tailleTabtmp)-1][0] = i;
+                            TabPieceEchec[(*tailleTabtmp)-1][1] = j;
+                            
+                            (*tailleTabtmp)++;
+                        } else {
+                            TabPieceEchec = realloc(TabPieceEchec,sizeof(int)*(*tailleTabtmp));
+                            TabPieceEchec[(*tailleTabtmp)-1][0] = i;
+                            TabPieceEchec[(*tailleTabtmp)-1][1] = j;
+                            (*tailleTabtmp)++;
+                           
+                        }
+                    }
 
-                    if (verif)
+
+                }    
+            }
+        }
+
+
+    }
+    
+    if (*TabPieceEchec == NULL){
+        free(TabPieceEchec);
+        TabPieceEchec = NULL;
+        *tailleTabtmp =0;
+        
+    }
+
+    return TabPieceEchec;
+}
+
+
+Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEchec,Couleur MetEnEchec, Piece** echiquier){
+
+    Bool verif = FAUX;
+    int** TabPieceEchec;
+  
+    int yR = CoordonneRoi[0];
+    int xR = CoordonneRoi[1];
+    int NewCoordonneeRoi[2];
+
+    int tailleuseless;
+
+    if (yR - 1 >= 0 && xR == CoordonneRoi[1])
+    {
+
+        NewCoordonneeRoi[0] = yR - 1;
+        NewCoordonneeRoi[1] = xR;
+        TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+        if (TabPieceEchec == NULL)
+        {
+            verif = VRAI;
+        }
+
+        free(TabPieceEchec);
+    }
+    else
+    {
+        if (yR + 1 < taille && xR == CoordonneRoi[1])
+        {
+
+            NewCoordonneeRoi[0] = yR + 1;
+            NewCoordonneeRoi[1] = xR;
+            TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+
+            if (TabPieceEchec == NULL)
+            {
+                verif = VRAI;
+            }
+
+            free(TabPieceEchec);
+        }
+        else
+        {
+            if (xR - 1 >= 0 && yR == CoordonneRoi[0])
+            {
+                NewCoordonneeRoi[0] = yR;
+                NewCoordonneeRoi[1] = xR - 1;
+                TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+
+                if (TabPieceEchec == NULL)
+                {
+                    verif = VRAI;
+                }
+
+                free(TabPieceEchec);
+            }
+            else
+            {
+                if (xR + 1 < taille && yR == CoordonneRoi[0])
+                {
+
+                    NewCoordonneeRoi[0] = yR;
+                    NewCoordonneeRoi[1] = xR + 1;
+                    TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+
+                    if (TabPieceEchec == NULL)
                     {
-                        if (TailleTabEchec <= 1)
+                        verif = VRAI;
+                    }
+
+                    free(TabPieceEchec);
+                }
+                else
+                {
+                    if (yR - 1 >= 0 && xR - 1 >= 0)
+                    {
+
+                        NewCoordonneeRoi[0] = yR - 1;
+                        NewCoordonneeRoi[1] = xR - 1;
+                        TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+
+                        if (TabPieceEchec == NULL)
                         {
-                            *TabPieceEchec = (int *)malloc(sizeof(int) * 2);
-                            TabPieceEchec[TailleTabEchec-1][0] = i;
-                            TabPieceEchec[TailleTabEchec-1][1] = j;
-                            TailleTabEchec++;
+                            verif = VRAI;
+                        }
+
+                        free(TabPieceEchec);
+                    }
+                    else
+                    {
+                        if (yR - 1 >= 0 && xR + 1 < taille)
+                        {
+
+                            NewCoordonneeRoi[0] = yR - 1;
+                            NewCoordonneeRoi[1] = xR + 1;
+                            TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+
+                            if (TabPieceEchec == NULL)
+                            {
+                                verif = VRAI;
+                            }
+
+                            free(TabPieceEchec);
                         }
                         else
                         {
-                            TabPieceEchec = realloc(TabPieceEchec, sizeof(int) * TailleTabEchec);
-                            TabPieceEchec[TailleTabEchec-1][0] = i;
-                            TabPieceEchec[TailleTabEchec-1][1] = j;
-                            TailleTabEchec++;
+                            if (yR + 1 < taille && xR + 1 < taille)
+                            {
+
+                                NewCoordonneeRoi[0] = yR + 1;
+                                NewCoordonneeRoi[1] = xR + 1;
+                                TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+
+                                if (TabPieceEchec == NULL)
+                                {
+                                    verif = VRAI;
+                                }
+
+                                free(TabPieceEchec);
+                            }
+                            else
+                            {
+                                if (yR + 1 < taille && xR - 1 >= 0)
+                                {
+
+                                    NewCoordonneeRoi[0] = yR + 1;
+                                    NewCoordonneeRoi[1] = xR - 1;
+                                    TabPieceEchec =
+                                        EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec,&tailleuseless);
+
+                                    if (TabPieceEchec == NULL)
+                                    {
+                                        verif = VRAI;
+                                    }
+
+                                    free(TabPieceEchec);
+                                }
+                            }
                         }
                     }
                 }
@@ -499,11 +654,5 @@ int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur Mise
         }
     }
 
-    if (*TabPieceEchec == NULL)
-    {
-        free(TabPieceEchec);
-        TabPieceEchec = NULL;
-    }
-
-    return TabPieceEchec;
+    return verif;
 }

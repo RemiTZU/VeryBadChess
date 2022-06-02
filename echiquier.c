@@ -109,16 +109,17 @@ void MiseEnPlaceRoi(Piece** echiquier, int taille)
 {
 
     char affichagePiece[] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
+    int R = rand()%taille;
 
-    echiquier[0][taille / 2].aff = affichagePiece[6];
-    echiquier[taille - 1][taille / 2].aff = affichagePiece[6];
+    echiquier[0][R].aff = affichagePiece[6];
+    echiquier[taille - 1][R].aff = affichagePiece[6];
 
-    echiquier[0][taille / 2].couleur = NOIR;
-    echiquier[taille - 1][taille / 2].couleur = BLANC;
+    echiquier[0][R].couleur = NOIR;
+    echiquier[taille - 1][R].couleur = BLANC;
 
-    echiquier[0][taille / 2].nom = ROI;
-    echiquier[taille - 1][taille / 2].nom = ROI;
+    echiquier[0][R].nom = ROI;
+    echiquier[taille - 1][R].nom = ROI;
 
-    echiquier[0][taille / 2].coup = 0;
-    echiquier[taille - 1][taille / 2].coup= 0;
+    echiquier[0][R].coup = 0;
+    echiquier[taille - 1][R].coup= 0;
 }

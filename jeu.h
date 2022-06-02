@@ -42,7 +42,7 @@ void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiqu
 Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
- * @brief Fonction se répettant dans FouMouvement
+ * @brief Fonction se répettant dans FouVerification
  *
  * @param i --> entier d'indentation
  * @param y --> ligne d'arrivée
@@ -135,9 +135,22 @@ Bool MouvementPieceEchec(int taille,int coordonnee[2],int coordonneeRoi[2],Piece
  * @param echiquier -->  Structure de Piece 
  * @param MiseEnEchec --> Couleur du Roi mis en échec potentiel
  * @param MetEnEchec --> Couleur de la pièce qui met en échec 
+ * @param tailleTabtmp --> Tailledu Tableau qui met en echec le roi
  * @return int** --> tableau de deux dimensions de int qui contient les coordonnées de chaque pièce mettant en échec le roi 
  */
-int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec);
+int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int* tailleTabtmp);
+
+/**
+ * @brief Fonction servant dans EchecEtMat -->indique si le Roi est bloqué à  sa place ou peut se déplacer en cas d'echec
+ * 
+ * @param taille --> taille de l'échiquier (6 x 6 par exemple)
+ * @param CoordonneRoi  --> Coordonnées du Roi qui est en echec
+ * @param MiseEnEchec--> Couleur du Roi mis en échec 
+ * @param MetEnEchec --> Couleur de la pièce qui met en échec  
+ * @param echiquier -->  Structure de Piece  
+ * @return Bool --> Ressort Vrai si le roi peut se déplacer, l'inverse sinon
+ */
+Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEchec,Couleur MetEnEchec, Piece** echiquier);
 
 #endif
 
