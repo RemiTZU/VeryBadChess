@@ -152,6 +152,33 @@ int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur Mise
  */
 Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEchec,Couleur MetEnEchec, Piece** echiquier);
 
+
+/**
+ * @brief Fonction utile dans EchecEtMat, sert à  savoir si oui ou non le Roi peut être protéger par ses coéquipiers
+ * 
+ * @param taille --> taille de l'échiquier (6 x 6 par exemple)
+ * @param echiquier  -->  Structure de Piece 
+ * @param coordonneePieceMetenEchec --> Piece qui met en échèque le roi
+ * @param MetEnEchec --> Couleur de la pièce qui met en échec  
+ * @param MisenEchec --> Couleur du Roi mis en échec 
+ * @param coordonneeRoi --> Coordonnées du Roi qui est en echec
+ * @return Bool --> ressort vrai si le contre est possible 
+ */
+Bool EchecEtMatContre(int taille, Piece **echiquier, int coordonneePieceMetenEchec[2], Couleur MetEnEchec, Couleur MisenEchec, int coordonneeRoi[2]);
+
+/**
+ * @brief Fonction primordiale pour la boucle de jeu 
+ * 
+ * @param taille  --> taille de l'échiquier (6 x 6 par exemple)
+ * @param CoordonneRoi --> Coordonnées du Roi qui est en echec 
+ * @param MiseEnEchec --> Couleur du Roi mis en échec 
+ * @param MetEnEchec  --> Couleur du Roi mis en échec 
+ * @param echiquier -->  Structure de Piece 
+ * @return Bool --> ressort VRAI si le roi n'est pas en echec et mat 
+ */
+Bool PasEchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
+
+
 #endif
 
 

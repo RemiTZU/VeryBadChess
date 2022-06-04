@@ -477,11 +477,12 @@ int** EchecRoi(int taille, int CoordonneRoi[2], Piece** echiquier,Couleur MiseEn
                     
                     if(verif) {
                         if((*tailleTabtmp) <= 1){
-                            *TabPieceEchec = (int*)malloc(sizeof(int)*2);
+                           
+                           *TabPieceEchec = (int*)malloc(sizeof(int)*2);
                             TabPieceEchec[(*tailleTabtmp)-1][0] = i;
                             TabPieceEchec[(*tailleTabtmp)-1][1] = j;
-                            
                             (*tailleTabtmp)++;
+
                         } else {
                             TabPieceEchec = realloc(TabPieceEchec,sizeof(int)*(*tailleTabtmp));
                             TabPieceEchec[(*tailleTabtmp)-1][0] = i;
@@ -654,5 +655,801 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
         }
     }
 
+    return verif;
+}
+
+
+Bool EchecEtMatContre(int taille, Piece **echiquier, int coordonneePieceMetenEchec[2], Couleur MetEnEchec,Couleur MisenEchec, int coordonneeRoi[2])
+{
+
+    Piece tmp; // utile pour les verifications
+    Bool verif = FAUX;
+    Bool verifEchecRoi = VRAI;
+    int yp = coordonneePieceMetenEchec[0];
+    int xp = coordonneePieceMetenEchec[1];
+    int **TabPieceProtegeRoi; // utile pour stockée les coordonnées des pièces qui peuvent éventuellement protéger le
+                              // Roi en prise
+    int tailleTab = 0;
+    int **tabok;
+    int Tailletabok = 0; // useless
+    int i = 0;
+    int CoordonneeVerif[2];
+
+   
+    if (echiquier[yp][xp].nom == CAVALIER || echiquier[yp][xp].nom == PION)
+    {
+        i = 0;
+        TabPieceProtegeRoi =
+            EchecRoi(taille, coordonneePieceMetenEchec, echiquier, MetEnEchec, MisenEchec,
+                     &tailleTab); // ici la fonction echec Roi cherche toutes les pièces de la couleur du Roi en prise
+                                  // qui peuvent prendre la pièce qui met en echec le roi
+
+        if (tailleTab > 0 && TabPieceProtegeRoi != NULL)
+        { // Finalité --> dire si une pièce de la couleur du ROI peut prendre la pièce en question
+            tmp = echiquier[yp][xp];
+
+            while (i < tailleTab && verifEchecRoi)
+            {
+
+                CoordonneeVerif[0] = TabPieceProtegeRoi[i][0];
+                CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                if (tabok == NULL)
+                {
+                    verifEchecRoi = FAUX;
+                }
+                Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                          echiquier);    // on remet la pièce à  sa place fin de vérification
+                echiquier[yp][xp] = tmp; // on remet à sa place la pièce
+                i++;
+            }
+            if (i > 0 && i < tailleTab - 1)
+            {
+                verif = VRAI;
+            }
+        }
+        free(TabPieceProtegeRoi);
+        TabPieceProtegeRoi = NULL;
+        free(tabok);
+        tabok = NULL;
+        tailleTab = 0;
+        Tailletabok = 0;
+    }
+
+    if (echiquier[yp][xp].nom == TOUR)
+    {
+
+        int h = 0;
+        int l = 0;
+        TabPieceProtegeRoi = EchecRoi(taille, coordonneePieceMetenEchec, echiquier, MetEnEchec, MisenEchec, &tailleTab);
+
+        if (tailleTab > 0 && TabPieceProtegeRoi != NULL)
+        {
+
+            if (xp == coordonneeRoi[1])
+            {
+                h = abs(coordonneeRoi[0] - yp);
+                if (yp < coordonneeRoi[0])
+                {
+
+                    for (int k = 0; k < h; k++)
+                    {
+                        coordonneePieceMetenEchec[0] = yp + k;
+                        tmp = echiquier[yp + k][xp];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp + k][xp] = tmp; // on remet à sa place la pièce
+                            free(tabok);
+                            tabok = NULL;
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+                else
+                {
+
+                    for (int k = 0; k < h; k++)
+                    {
+                        coordonneePieceMetenEchec[0] = yp + k;
+                        tmp = echiquier[yp - k][xp];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp - k][xp] = tmp; // on remet à sa place la pièce
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            TabPieceProtegeRoi = NULL;
+                            tabok = NULL;
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+            }
+            if (yp == coordonneeRoi[0])
+            {
+                l = abs(coordonneeRoi[1] - xp);
+                if (xp < coordonneeRoi[1])
+                {
+
+                    for (int k = 0; k < l; k++)
+                    {
+                        coordonneePieceMetenEchec[1] = xp + k;
+                        tmp = echiquier[yp][xp + k];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp][xp + k] = tmp; // on remet à sa place la pièce
+                            free(tabok);
+                            tabok = NULL;
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+                else
+                {
+
+                    for (int k = 0; k < l; k++)
+                    {
+                        coordonneePieceMetenEchec[1] = xp - k;
+                        tmp = echiquier[yp][xp - k];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp][xp - k] = tmp; // on remet à sa place la pièce
+                            free(tabok);
+                            tabok = NULL;
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (echiquier[yp][xp].nom == FOU)
+    {
+
+        int dsg = 0; // diagonal supérieur gauche vat être utile pour l'écart de case entre le roi et le fou en question
+        int dsd = 0;
+        int dig = 0;
+        int did = 0;
+
+        if (xp - coordonneeRoi[1] < 0 && yp - coordonneeRoi[0] < 0)
+        {
+            dsg = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < dsg; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp + k;
+                coordonneePieceMetenEchec[1] = xp + k;
+                tmp = echiquier[yp + k][xp + k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp + k][xp + k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+
+        if (xp - coordonneeRoi[1] > 0 && yp - coordonneeRoi[0] < 0)
+        {
+            dsd = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < dsd; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp + k;
+                coordonneePieceMetenEchec[1] = xp - k;
+                tmp = echiquier[yp + k][xp - k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp + k][xp - k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+
+        if (xp - coordonneeRoi[1] < 0 && yp - coordonneeRoi[0] > 0)
+        {
+            dig = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < dig; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp - k;
+                coordonneePieceMetenEchec[1] = xp + k;
+                tmp = echiquier[yp - k][xp + k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp - k][xp + k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+
+        if (xp - coordonneeRoi[1] > 0 && yp - coordonneeRoi[0] > 0)
+        {
+
+            did = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < did; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp - k;
+                coordonneePieceMetenEchec[1] = xp - k;
+                tmp = echiquier[yp - k][xp - k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp - k][xp - k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+    }
+    if (echiquier[yp][xp].nom == DAME)
+    {
+
+        int dsg = 0; // diagonal supérieur gauche vat être utile pour l'écart de case entre le roi et le fou en question
+        int dsd = 0;
+        int dig = 0;
+        int did = 0;
+        int h = 0;
+        int l = 0;
+        TabPieceProtegeRoi = EchecRoi(taille, coordonneePieceMetenEchec, echiquier, MetEnEchec, MisenEchec, &tailleTab);
+
+        if (xp - coordonneeRoi[1] < 0 && yp - coordonneeRoi[0] < 0)
+        {
+            dsg = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < dsg; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp + k;
+                coordonneePieceMetenEchec[1] = xp + k;
+                tmp = echiquier[yp + k][xp + k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp + k][xp + k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+
+        if (xp - coordonneeRoi[1] > 0 && yp - coordonneeRoi[0] < 0)
+        {
+            dsd = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < dsd; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp + k;
+                coordonneePieceMetenEchec[1] = xp - k;
+                tmp = echiquier[yp + k][xp - k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp + k][xp - k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+
+        if (xp - coordonneeRoi[1] < 0 && yp - coordonneeRoi[0] > 0)
+        {
+            dig = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < dig; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp - k;
+                coordonneePieceMetenEchec[1] = xp + k;
+                tmp = echiquier[yp - k][xp + k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp - k][xp + k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+
+        if (xp - coordonneeRoi[1] > 0 && yp - coordonneeRoi[0] > 0)
+        {
+
+            did = abs(yp - coordonneeRoi[0]);
+
+            for (int k = 0; k < did; k++)
+            {
+                coordonneePieceMetenEchec[0] = yp - k;
+                coordonneePieceMetenEchec[1] = xp - k;
+                tmp = echiquier[yp - k][xp - k];
+                while (i < tailleTab && verifEchecRoi)
+                {
+
+                    CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                    CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                    Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                    tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                    if (tabok == NULL)
+                    {
+                        verifEchecRoi = FAUX;
+                    }
+                    Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                              echiquier);            // on remet la pièce à  sa place fin de vérification
+                    echiquier[yp - k][xp - k] = tmp; // on remet à sa place la pièce
+                    free(tabok);
+                    tabok = NULL;
+                    i++;
+                }
+                if (i > 0 && i < tailleTab - 1)
+                {
+                    verif = VRAI;
+                    free(TabPieceProtegeRoi);
+                    free(tabok);
+                    tabok = NULL;
+                    TabPieceProtegeRoi = NULL;
+                    tailleTab = 0;
+                    Tailletabok = 0;
+                    return verif;
+                }
+            }
+        }
+
+        if (tailleTab > 0 && TabPieceProtegeRoi != NULL)
+        {
+
+            if (xp == coordonneeRoi[1])
+            {
+                h = abs(coordonneeRoi[0] - yp);
+                if (yp < coordonneeRoi[0])
+                {
+
+                    for (int k = 0; k < h; k++)
+                    {
+                        coordonneePieceMetenEchec[0] = yp + k;
+                        tmp = echiquier[yp + k][xp];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp + k][xp] = tmp; // on remet à sa place la pièce
+                            free(tabok);
+                            tabok = NULL;
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+                else
+                {
+
+                    for (int k = 0; k < h; k++)
+                    {
+                        coordonneePieceMetenEchec[0] = yp + k;
+                        tmp = echiquier[yp - k][xp];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp - k][xp] = tmp; // on remet à sa place la pièce
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            TabPieceProtegeRoi = NULL;
+                            tabok = NULL;
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+            }
+            if (yp == coordonneeRoi[0])
+            {
+                l = abs(coordonneeRoi[1] - xp);
+                if (xp < coordonneeRoi[1])
+                {
+
+                    for (int k = 0; k < l; k++)
+                    {
+                        coordonneePieceMetenEchec[1] = xp + k;
+                        tmp = echiquier[yp][xp + k];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp][xp + k] = tmp; // on remet à sa place la pièce
+                            free(tabok);
+                            tabok = NULL;
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+                else
+                {
+
+                    for (int k = 0; k < l; k++)
+                    {
+                        coordonneePieceMetenEchec[1] = xp - k;
+                        tmp = echiquier[yp][xp - k];
+                        i = 0;
+                        while (i < tailleTab && verifEchecRoi)
+                        {
+
+                            CoordonneeVerif[0] = TabPieceProtegeRoi[i][0]; // pièce qui protege le roi
+                            CoordonneeVerif[1] = TabPieceProtegeRoi[i][1];
+                            Mouvement(CoordonneeVerif, coordonneePieceMetenEchec, echiquier);
+                            tabok = EchecRoi(taille, coordonneeRoi, echiquier, MisenEchec, MetEnEchec, &Tailletabok);
+                            if (tabok == NULL)
+                            {
+                                verifEchecRoi = FAUX;
+                            }
+                            Mouvement(coordonneePieceMetenEchec, CoordonneeVerif,
+                                      echiquier);        // on remet la pièce à  sa place fin de vérification
+                            echiquier[yp][xp - k] = tmp; // on remet à sa place la pièce
+                            free(tabok);
+                            tabok = NULL;
+                            i++;
+                        }
+                        if (i > 0 && i < tailleTab - 1)
+                        {
+                            verif = VRAI;
+                            free(TabPieceProtegeRoi);
+                            free(tabok);
+                            tabok = NULL;
+                            TabPieceProtegeRoi = NULL;
+                            tailleTab = 0;
+                            Tailletabok = 0;
+                            return verif;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    free(TabPieceProtegeRoi);
+    free(tabok);
+    tabok = NULL;
+    TabPieceProtegeRoi = NULL;
+    tailleTab = 0;
+    Tailletabok = 0;
+    return verif;
+}
+
+Bool PasEchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier)
+{
+
+    Bool verif = VRAI;
+    Bool verifMvtElementaire = FAUX;
+    Bool verifContre = FAUX;
+    int **TabEchec;
+    int tailletableau = 0;
+    int CoordonnePieceMetEnEchec[2]; // dans le cas où le roi serait effectivement en echec et qu'il ne peut bouger
+
+    TabEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &tailletableau);
+
+    if (TabEchec != NULL && tailletableau != 0)
+    {
+        verifMvtElementaire = RoiMouvementElementaire(taille, CoordonneRoi, MiseEnEchec, MetEnEchec, echiquier);
+
+        if (verifMvtElementaire == FAUX)
+        {
+            CoordonnePieceMetEnEchec[0] = TabEchec[0][0];
+            CoordonnePieceMetEnEchec[1] = TabEchec[0][1];
+            verifContre =EchecEtMatContre(taille, echiquier, CoordonnePieceMetEnEchec, MetEnEchec, MiseEnEchec, CoordonneRoi);
+            if (verifContre == FAUX)
+            {
+                verif = FAUX;
+            }
+        }
+    }
+    free(TabEchec);
+    TabEchec = NULL;
+    tailletableau = 0;
     return verif;
 }
