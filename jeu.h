@@ -141,7 +141,7 @@ Bool MouvementPieceEchec(int taille,int coordonnee[2],int coordonneeRoi[2],Piece
 int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int* tailleTabtmp);
 
 /**
- * @brief Fonction servant dans EchecEtMat -->indique si le Roi est bloqué à  sa place ou peut se déplacer en cas d'echec
+ * @brief Fonction servant dans EchecEtMat et dans le main -->indique si le Roi est bloqué à  sa place ou peut se déplacer en cas d'echec
  * 
  * @param taille --> taille de l'échiquier (6 x 6 par exemple)
  * @param CoordonneRoi  --> Coordonnées du Roi qui est en echec
