@@ -94,7 +94,7 @@ Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int tai
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
  */
-Bool RoiVeerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool RoiVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'une Reine
@@ -128,7 +128,7 @@ void PositionRoi(int CoordonneeRoi[2], Couleur Roi, int taille, Piece** echiquie
 Bool MouvementPieceEchec(int taille,int coordonnee[2],int coordonneeRoi[2],Piece** echiquier);
 
 /**
- * @brief Fonction qui indique si le roi d'une couleur (NOIR ou BLANC) est en échec au moment donné
+ * @brief Fonction qui indique si le roi d'une couleur (NOIR ou BLANC) est en échec à un moment donné
  * 
  * @param taille --> taille de l'échiquier (6 x 6 par exemple)  
  * @param CoordonneeRoi --> Coordonnées du Roi dont on vérifie l'echec potentiel 
@@ -178,6 +178,13 @@ Bool EchecEtMatContre(int taille, Piece **echiquier, int coordonneePieceMetenEch
  */
 Bool PasEchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
 
+/**
+ * @brief free des tableaux à deux dimensions mallocer
+ * 
+ * @param tab --> tableau de deux dimension d'entiers
+ * @param tailleTab--> taille du tableau (première dimension)
+ */
+void freeTab(int*** tab, int tailleTab);
 
 #endif
 

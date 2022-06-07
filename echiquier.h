@@ -8,11 +8,6 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef __unix__ 
-# include <unistd.h>
-#elif defined _WIN32 
-# include <windows.h>
-#endif
 
 typedef enum
 {
@@ -79,4 +74,5 @@ void reverse(int taille, Piece** echiquier);
  * @param taille --> taille de l'echiquier
  */
 void MiseEnPlaceRoi(Piece** echiquier, int taille);
+
 #endif

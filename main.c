@@ -2,12 +2,12 @@
 
 int main()
 {
-    // int coordonneeinit[2];
-    // int coordonneefin[2];
     int n = -1;
     int taille = 0;
     char rep[20];
-
+    Piece** echiquier;
+    srand(time(NULL));
+    
     system("cls");
     printf("  _____ _____   _ \n");
     printf(" |_   _|_  | | | |\n");
@@ -35,7 +35,7 @@ int main()
         do
         {
 
-            printf("Trois choix possible (1,2,3)\n");
+            printf("Trois choix possibles (1,2,3)\n");
             scanf("%s", rep);
             fflush(stdin);
 
@@ -45,7 +45,7 @@ int main()
     switch (n)
     {
     case (1):
-        printf("quelle taille de dechiquier voulez vous ?\n");
+        printf("Quelle taille de d'%cchiquier voulez vous ?\n",130);
         scanf("%s", rep);
         fflush(stdin);
 
@@ -53,26 +53,31 @@ int main()
         {
             do
             {
-                printf("Taille echiquier possible(6/7/8/9/10/11/12) \n");
+                printf("Taille d'%cchiquier possible(6/7/8/9/10/11/12) \n",130);
                 scanf("%s", rep);
                 fflush(stdin);
 
             } while ((sscanf(rep, "%d", &taille) == EOF || taille < 6 || taille > 12));
         }
 
+        echiquier = initializeechiquier(taille);
+        partie(taille,echiquier);
+        free(echiquier);
         system("cls");
-        Piece **echiquier = initializeechiquier(taille);
-        affichage(taille, echiquier);
-        // Acompleter
-        freechiquier(taille, &echiquier);
+        
+        
+        break;
+        
     case (2):
         // completer
         break;
     case (3):
 
-        printf("Oh, dommage a bientot\n");
+        printf("Oh, dommage %c bientot\n",133);
         break;
     }
 
     return EXIT_SUCCESS;
 }
+
+
