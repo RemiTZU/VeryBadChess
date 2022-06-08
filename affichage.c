@@ -1,5 +1,39 @@
 #include <affichage.h>
 
+
+void acquisitioncoordonnees(int taille, int coordonnee[2])
+{
+    char rep[50];
+    char abcissetmp;
+    int abcisse;
+    int ordonne;
+
+    printf("rentrer une lettre pour les abcisses et un nombre pour les "
+           "ordonn%ces\n",
+           130);
+
+    scanf("%s", rep);
+    fflush(stdin);
+
+    while (sscanf(rep, "%c%d", &abcissetmp, &ordonne) == EOF || (abcissetmp < 65 || abcissetmp > taille + 65) ||
+           (ordonne < 0 || ordonne > taille))
+    {
+        printf("Oups, il semblerait que les coordonn%ces rentr%ce ne soit pas "
+               "valide.(exemple de coordonn%ces valident #%c%d# pour la taille "
+               "%d par "
+               "%d)\n",
+               130, 130, 130, 65, taille, taille, taille);
+        scanf("%s", rep);
+        fflush(stdin);
+    }
+
+    abcisse = abcissetmp;
+    switchbase(&abcisse, &ordonne, taille);
+
+    coordonnee[0] = ordonne;
+    coordonnee[1] = abcisse;
+}
+
 void ecritureaffichage(char* ecriture, int motifascii)
 {
 
@@ -115,257 +149,213 @@ void menu()
     printf("\n");
 }
 
-void CoupDansPartie(int taille,Piece** echiquier,int CoordonneeInit[2],int CoordonneeFinit[2],Couleur Joue){
+void Coup(int taille,int CoordonneeInit[2],int CoordonneeFinit[2]){
     
-   
-    Bool verif = FAUX;
+    printf("\nChoisis une pi%cce %c d%cplacer...\n",138,133,130);
+    acquisitioncoordonnees(taille,CoordonneeInit);
+    printf("\nSur quelle case veux-tu d%cplacer ta pi%ce...\n",130,138);
+    acquisitioncoordonnees(taille,CoordonneeFinit);
 
-    if(echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom == PION){    
-        printf("\n");
-        acquisitioncoordonnees(taille,CoordonneeFinit);
-        printf("\n");
-        verif = PionVerification(CoordonneeInit,CoordonneeFinit,taille,echiquier);
+}
 
-        while(echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]].couleur == Joue || verif == FAUX){
-            printf(" Veuillez rentrer un coup l%cgal pour le pion",130);
-            printf("\n");
-            acquisitioncoordonnees(taille,CoordonneeFinit);  
-            printf("\n");
-            verif = PionVerification(CoordonneeInit,CoordonneeFinit,taille,echiquier);  
-        }  
+Bool MouvementLegal(int taille,int CoordonneeInit[2], int CoordonneeFinit[2],Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int CoordonneRoi[2]){
+
+    int** TableauEchec;
+    int TailleEchec = 0 ;
+    
+    Bool verif = VRAI; 
+
+    switch(echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom){
+
+        case(0):
+            
+            verif = FAUX; 
+            
+            return verif;
+            break;
+        
+        case(1):
+            
+            verif = PionVerification(CoordonneeInit,CoordonneeFinit,taille,echiquier);
+
+            if(verif == FAUX){
+                printf("Attention ton coup ne marche pas pour un pion\n");
+                return verif;
+            }
+            
+            
+            Mouvement(CoordonneeInit,CoordonneeFinit,echiquier);
+            TableauEchec = EchecRoi(taille, CoordonneRoi,echiquier, MiseEnEchec, MetEnEchec,&TailleEchec);
+
+            if(TableauEchec != NULL){
+                printf("Attention ton coup met en %cchec ton Roi",130);
+                verif = FAUX;
+                freeTab(&TableauEchec,TailleEchec);
+                Mouvement(CoordonneeFinit,CoordonneeInit,echiquier);
+                return verif;
+            }
+            break;
+        
+        case(2):
+            
+            verif = CavalierVerification(CoordonneeInit,CoordonneeFinit,echiquier);
+
+            if(verif == FAUX){
+                printf("Attention ton coup ne marche pas pour un cavalier\n");
+                return verif;
+            }
+            Mouvement(CoordonneeInit,CoordonneeFinit,echiquier);
+            TableauEchec = EchecRoi(taille, CoordonneRoi,echiquier, MiseEnEchec, MetEnEchec,&TailleEchec);
+
+            if(TableauEchec != NULL){
+                printf("Attention ton coup met en %cchec ton Roi",130);
+                verif = FAUX;
+                freeTab(&TableauEchec,TailleEchec);
+                Mouvement(CoordonneeFinit,CoordonneeInit,echiquier);
+                return verif;
+            }
+            break;
+        case(3):
+            verif = FouVerification(CoordonneeInit,CoordonneeFinit,echiquier);
+
+            if(verif == FAUX){
+                printf("Attention ton coup ne marche pas pour un fou\n");
+                return verif;
+            }
+            Mouvement(CoordonneeInit,CoordonneeFinit,echiquier);
+            TableauEchec = EchecRoi(taille, CoordonneRoi,echiquier, MiseEnEchec, MetEnEchec,&TailleEchec);
+
+            if(TableauEchec != NULL){
+                printf("Attention ton coup met en %cchec ton Roi",130);
+                verif = FAUX;
+                freeTab(&TableauEchec,TailleEchec);
+                Mouvement(CoordonneeFinit,CoordonneeInit,echiquier);
+                return verif;
+            }
+            break;
+        case(4):
+            verif = TourVerification(CoordonneeInit,CoordonneeFinit,echiquier);
+
+            if(verif == FAUX){
+                printf("Attention ton coup ne marche pas pour une tour\n");
+                return verif;
+            }
+            Mouvement(CoordonneeInit,CoordonneeFinit,echiquier);
+            TableauEchec = EchecRoi(taille, CoordonneRoi,echiquier, MiseEnEchec, MetEnEchec,&TailleEchec);
+
+            if(TableauEchec != NULL){
+                printf("Attention ton coup met en %cchec ton Roi",130);
+                verif = FAUX;
+                freeTab(&TableauEchec,TailleEchec);
+                Mouvement(CoordonneeFinit,CoordonneeInit,echiquier);
+                return verif;
+            }
+            break;
+
+    
+        case(5):
+            verif = DameVerification(CoordonneeInit,CoordonneeFinit,echiquier);
+
+            if(verif == FAUX){
+                printf("Attention ton coup ne marche pas pour une dame\n");
+                return verif;
+            }
+            Mouvement(CoordonneeInit,CoordonneeFinit,echiquier);
+            TableauEchec = EchecRoi(taille, CoordonneRoi,echiquier, MiseEnEchec, MetEnEchec,&TailleEchec);
+
+            if(TableauEchec != NULL){
+                printf("Attention ton coup met en %cchec ton Roi",130);
+                verif = FAUX;
+                freeTab(&TableauEchec,TailleEchec);
+                Mouvement(CoordonneeFinit,CoordonneeInit,echiquier);
+                return verif;
+            }
+            break;
+        case(6):  
+            verif = RoiVerification(CoordonneeInit,CoordonneeFinit,echiquier);
+
+            if(verif == FAUX){
+                printf("Attention ton coup ne marche pas pour un roi\n");
+                return verif;
+            }
+            Mouvement(CoordonneeInit,CoordonneeFinit,echiquier);
+            PositionRoi(CoordonneRoi,MiseEnEchec,taille,echiquier);
+            TableauEchec = EchecRoi(taille, CoordonneRoi,echiquier, MiseEnEchec, MetEnEchec,&TailleEchec);
+
+            if(TableauEchec != NULL){
+                printf("Attention ton coup met en %cchec ton Roi",130);
+                verif = FAUX;
+                freeTab(&TableauEchec,TailleEchec);
+                Mouvement(CoordonneeFinit,CoordonneeInit,echiquier);
+                PositionRoi(CoordonneRoi,MiseEnEchec,taille,echiquier);
+                return verif;
+            }
+            break;
+
+           
     }   
-    
-    if(echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom == CAVALIER){    
-        
-        printf("\n");
-        acquisitioncoordonnees(taille,CoordonneeFinit);
-        printf("\n");
-        verif = CavalierVerification(CoordonneeInit,CoordonneeFinit,echiquier);
-
-        while(echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]].couleur == Joue || verif == FAUX){
-            printf(" Veuillez rentrer un coup l%cgal pour le cavalier",130);
-            printf("\n");
-            acquisitioncoordonnees(taille,CoordonneeFinit);  
-            printf("\n");
-            verif = CavalierVerification(CoordonneeInit,CoordonneeFinit,echiquier);  
-        }
-    }
-   
-    if(echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom == FOU){    
-        printf("\n");
-        acquisitioncoordonnees(taille,CoordonneeFinit);
-        printf("\n");
-        verif = FouVerification(CoordonneeInit,CoordonneeFinit,echiquier);
-
-        while(echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]].couleur == Joue || verif == FAUX){
-            printf(" Veuillez rentrer un coup l%cgal pour le fou",130);
-            printf("\n");
-            acquisitioncoordonnees(taille,CoordonneeFinit);  
-            printf("\n");
-            verif = FouVerification(CoordonneeInit,CoordonneeFinit,echiquier);  
-        }
-    }
-
-
-
-    if(echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom == TOUR){   
-        printf("\n");
-        acquisitioncoordonnees(taille,CoordonneeFinit);
-        printf("\n");
-        verif = TourVerification(CoordonneeInit,CoordonneeFinit,echiquier);
-
-        while(echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]].couleur == Joue || verif == FAUX){
-            printf(" Veuillez rentrer un coup l%cgal pour la tour",130);
-            printf("\n");
-            acquisitioncoordonnees(taille,CoordonneeFinit);  
-            printf("\n");
-            verif = TourVerification(CoordonneeInit,CoordonneeFinit,echiquier);  
-        }
-    }
-
-
-    if(echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom == DAME){
-        printf("\n");
-        acquisitioncoordonnees(taille,CoordonneeFinit);
-        printf("\n");
-        verif = DameVerification(CoordonneeInit,CoordonneeFinit,echiquier);
-
-        while(echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]].couleur == Joue || verif == FAUX){
-            printf(" Veuillez rentrer un coup l%cgal pour la dame",130);
-            printf("\n");
-            acquisitioncoordonnees(taille,CoordonneeFinit);  
-            printf("\n");
-            verif = DameVerification(CoordonneeInit,CoordonneeFinit,echiquier);  
-        }
-
-    }
-
-
-    if(echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom == ROI){
-        
-        printf("\n");
-        acquisitioncoordonnees(taille,CoordonneeFinit);
-        printf("\n");
-        verif = RoiVerification(CoordonneeInit,CoordonneeFinit,echiquier);
-
-        while(echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]].couleur == Joue || verif == FAUX){
-            printf(" Veuillez rentrer un coup l%cgal pour la dame",130);
-            printf("\n");
-            acquisitioncoordonnees(taille,CoordonneeFinit);  
-            printf("\n");
-            verif = RoiVerification(CoordonneeInit,CoordonneeFinit,echiquier);  
-        }    
-
-    }
+    Mouvement(CoordonneeFinit,CoordonneeInit,echiquier);
+    PositionRoi(CoordonneRoi,MiseEnEchec,taille,echiquier); 
+    freeTab(&TableauEchec,TailleEchec);
+    return verif;
 }
 
 void partie(int taille , Piece** echiquier){
 
-    
     int CoordonneeRoiBlanc[2];
     int CoordonneeRoiNoir[2];
-    int CoordonneeDeplacementInit[2];
-    int CoordonneeDeplacementFinit[2];
-    Bool PasEchecEtMatBlanc = VRAI;
-    Bool PasEchecEtMatNoir = VRAI;
-    Bool EchecBlanc = VRAI;
-    Bool EchecNoir = VRAI;
-    int** tabBlanc;
-    int** tabNoir;
-    int tailleTabBlanc;
-    int tailleTabNoir;
+    int coordonneeDepart[2];    
+    int coordonneeArrive[2];    
+    int tour = 0 ;
     
-    int tour = 0;
-   
-    Piece tmp;
 
- 
-
-    while( PasEchecEtMatBlanc && PasEchecEtMatNoir ) {
+    while(EchecEtMat(taille,CoordonneeRoiBlanc,BLANC,NOIR,echiquier) == FAUX && EchecEtMat(taille,CoordonneeRoiNoir,NOIR,BLANC,echiquier) == FAUX ){
         
-        if(tour%2 == 0)
+        affichage(taille,echiquier); 
+        Coup(taille,coordonneeDepart,coordonneeArrive);
+
+        if(tour%2==0)
         {   
-            
-            affichage(taille,echiquier);
             PositionRoi(CoordonneeRoiBlanc,BLANC,taille,echiquier);
-            while(EchecBlanc){
-               
-                printf("\n");
-                acquisitioncoordonnees(taille,CoordonneeDeplacementInit);
-                printf("\n");
+            while(MouvementLegal(taille,coordonneeDepart,coordonneeArrive,echiquier,BLANC,NOIR,CoordonneeRoiBlanc) == FAUX || echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != BLANC)
+            {       
+                if( echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != BLANC)
+                {   
+                   printf("Vous avec s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n",130,130,138);
 
-
-                while(echiquier[CoordonneeDeplacementInit[0]][CoordonneeDeplacementInit[1]].couleur != BLANC){
-                    printf("Vous ne pouvez pas d%cplacer une case vide ou une pi%cce d'une autre couleur\n",130,133);
-                    acquisitioncoordonnees(taille,CoordonneeDeplacementInit);
                 }
+                Coup(taille,coordonneeDepart,coordonneeArrive);
+                PositionRoi(CoordonneeRoiBlanc,BLANC,taille,echiquier);    
+            }
+            Mouvement(coordonneeDepart,coordonneeArrive,echiquier);
 
-                CoupDansPartie(taille,echiquier,CoordonneeDeplacementInit,CoordonneeDeplacementFinit,BLANC);
-                tmp = echiquier[CoordonneeDeplacementFinit[0]][CoordonneeDeplacementFinit[1]];
-                Mouvement(CoordonneeDeplacementInit,CoordonneeDeplacementFinit,echiquier);
-                tabBlanc = EchecRoi(taille,CoordonneeRoiBlanc,echiquier,BLANC,NOIR,&tailleTabBlanc); 
-
-                if(tabBlanc != NULL){
-                    Mouvement(CoordonneeDeplacementFinit,CoordonneeDeplacementInit,echiquier);
-                    echiquier[CoordonneeDeplacementFinit[0]][CoordonneeDeplacementFinit[1]] = tmp;
-                    printf("Vous allez mettre en %cchec votre roi, veuillez choisir une autre pièce ou un coup valable\n",130);
-                    freeTab(&tabBlanc,tailleTabBlanc);
-                    tailleTabBlanc = 0 ;
-
-                }else{
-                    EchecBlanc = FAUX;
-                    echiquier[CoordonneeDeplacementFinit[0]][CoordonneeDeplacementFinit[1]].coup ++;
-                    reverse(taille,echiquier);
-                    PasEchecEtMatNoir = PasEchecEtMat(taille,CoordonneeRoiNoir,NOIR,BLANC,echiquier);
-                    tour++;
-                    freeTab(&tabBlanc,tailleTabBlanc);
-                    tailleTabBlanc = 0 ;     
-                }
-
-            
-            }  
-
-
-
+           
         }
         else
         {
-            affichage(taille,echiquier);
-            PositionRoi(CoordonneeRoiNoir,NOIR,taille,echiquier);
-            while(EchecNoir){
-               
-                printf("\n");
-                acquisitioncoordonnees(taille,CoordonneeDeplacementInit);
-                printf("\n");
+          PositionRoi(CoordonneeRoiNoir,NOIR,taille,echiquier);
+            while(MouvementLegal(taille,coordonneeDepart,coordonneeArrive,echiquier,NOIR,BLANC,CoordonneeRoiNoir) == FAUX || echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != NOIR)
+            {       
+                if( echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != NOIR)
+                {   
+                   printf("Vous avec s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n",130,130,138);
 
-
-                while(echiquier[CoordonneeDeplacementInit[0]][CoordonneeDeplacementInit[1]].couleur != NOIR){
-                    printf("Vous ne pouvez pas d%cplacer une case vide ou une pi%cce d'une autre couleur\n",130,133);
-                    acquisitioncoordonnees(taille,CoordonneeDeplacementInit);
                 }
-
-                CoupDansPartie(taille,echiquier,CoordonneeDeplacementInit,CoordonneeDeplacementFinit,NOIR);
-                tmp = echiquier[CoordonneeDeplacementFinit[0]][CoordonneeDeplacementFinit[1]];
-                Mouvement(CoordonneeDeplacementInit,CoordonneeDeplacementFinit,echiquier);
-                tabNoir = EchecRoi(taille,CoordonneeRoiNoir,echiquier,NOIR,BLANC,&tailleTabNoir); 
-
-                if(tabNoir != NULL){
-                    Mouvement(CoordonneeDeplacementFinit,CoordonneeDeplacementInit,echiquier);
-                    echiquier[CoordonneeDeplacementFinit[0]][CoordonneeDeplacementFinit[1]] = tmp;
-                    printf("Vous allez mettre en %cchec votre roi, veuillez choisir une autre pièce ou un coup valable\n",130);
-                    freeTab(&tabNoir, tailleTabNoir);
-                    tailleTabNoir = 0 ;
-                
-                }else{
-                    EchecNoir = FAUX;
-                    echiquier[CoordonneeDeplacementFinit[0]][CoordonneeDeplacementFinit[1]].coup ++;
-                    reverse(taille,echiquier);
-                    PasEchecEtMatBlanc = PasEchecEtMat(taille,CoordonneeRoiBlanc,BLANC,NOIR,echiquier);
-                    tour++;
-                    freeTab(&tabNoir, tailleTabNoir);
-                    tailleTabNoir = 0 ;     
-                }
-
-            
-            }           
+                Coup(taille,coordonneeDepart,coordonneeArrive);
+                PositionRoi(CoordonneeRoiNoir,NOIR,taille,echiquier);    
+            }
+            Mouvement(coordonneeDepart,coordonneeArrive,echiquier);  
         }
+        tour++;
+         
+    }       
+
+    
+    if(EchecEtMat(taille,CoordonneeRoiBlanc,BLANC,NOIR,echiquier) == VRAI){
+        printf("\n les Noirs gagnent par echec et mat \n");
     }
-
-    if(PasEchecEtMatBlanc == FAUX){
-
-        system("cls");
-        printf(" _______  __    __   _______   ______     _______ .___________.   .___  ___.      ___   .___________.    __                                                           \n");
-        printf("|   ____||  |  |  | |   ____| /      |   |   ____||           |   |   \\/   |     /   \\  |           |   |  |                                                          \n");
-        printf("|  |__   |  |__|  | |  |__   |  ,----'   |  |__   `---|  |----`   |  \\  /  |    /  ^  \\ `---|  |----`   |  |                                                          \n");
-        printf("|   __|  |   __   | |   __|  |  |        |   __|      |  |        |  |\\/|  |   /  /_\\  \\    |  |        |  |                                                          \n");
-        printf("|  |____ |  |  |  | |  |____ |  `----.   |  |____     |  |        |  |  |  |  /  _____  \\   |  |        |__|                                                          \n");
-        printf("|_______||__|  |__| |_______| \\______|   |_______|    |__|        |__|  |__| /__/     \\__\\  |__|        (__)                                                          \n");
-
-        printf("____    ____  __    ______ .___________.  ______    __  .______       _______     _______   _______     _______.   .__   __.   ______    __  .______          _______.\n");
-        printf("\\   \\  /   / |  |  /      ||           | /  __  \\  |  | |   _  \\     |   ____|   |       \\ |   ____|   /       |   |  \\ |  |  /  __  \\  |  | |   _  \\        /       |\n");
-        printf(" \\   \\/   /  |  | |  ,----'`---|  |----`|  |  |  | |  | |  |_)  |    |  |__      |  .--.  ||  |__     |   (----`   |   \\|  | |  |  |  | |  | |  |_)  |      |   (----`\n");
-        printf("  \\      /   |  | |  |         |  |     |  |  |  | |  | |      /     |   __|     |  |  |  ||   __|     \\   \\       |  . `  | |  |  |  | |  | |      /        \\   \\    \n");
-        printf("   \\    /    |  | |  `----.    |  |     |  `--'  | |  | |  |\\  \\----.|  |____    |  '--'  ||  |____.----)   |      |  |\\   | |  `--'  | |  | |  |\\  \\----.----)   |   \n");
-        printf("    \\__/     |__|  \\______|    |__|      \\______/  |__| | _| `._____||_______|   |_______/ |_______|_______/       |__| \\__|  \\______/  |__| | _| `._____|_______/    \n");
-
-    }else{
-        system("cls");
-        printf(" _______  __    __   _______   ______     _______ .___________.   .___  ___.      ___   .___________.    __                                                           \n");
-        printf("|   ____||  |  |  | |   ____| /      |   |   ____||           |   |   \\/   |     /   \\  |           |   |  |                                                          \n");
-        printf("|  |__   |  |__|  | |  |__   |  ,----'   |  |__   `---|  |----`   |  \\  /  |    /  ^  \\ `---|  |----`   |  |                                                          \n");
-        printf("|   __|  |   __   | |   __|  |  |        |   __|      |  |        |  |\\/|  |   /  /_\\  \\    |  |        |  |                                                          \n");
-        printf("|  |____ |  |  |  | |  |____ |  `----.   |  |____     |  |        |  |  |  |  /  _____  \\   |  |        |__|                                                          \n");
-        printf("|_______||__|  |__| |_______| \\______|   |_______|    |__|        |__|  |__| /__/     \\__\\  |__|        (__)                                                          \n");
-
-        printf(" ____    ____  __    ______ .___________.  ______    __  .______       _______     _______   _______     _______.   .______    __          ___      .__   __.   ______     _______.\n");
-        printf("\\   \\  /   / |  |  /      ||           | /  __  \\  |  | |   _  \\     |   ____|   |       \\ |   ____|   /       |   |   _  \\  |  |        /   \\     |  \\ |  |  /      |   /       |\n");
-        printf(" \\   \\/   /  |  | |  ,----'`---|  |----`|  |  |  | |  | |  |_)  |    |  |__      |  .--.  ||  |__     |   (----`   |  |_)  | |  |       /  ^  \\    |   \\|  | |  ,----'  |   (----`\n");
-        printf("  \\      /   |  | |  |         |  |     |  |  |  | |  | |      /     |   __|     |  |  |  ||   __|     \\   \\       |   _  <  |  |      /  /_\\  \\   |  . `  | |  |        \\   \\    \n");
-        printf("   \\    /    |  | |  `----.    |  |     |  `--'  | |  | |  |\\  \\----.|  |____    |  '--'  ||  |____.----)   |      |  |_)  | |  `----./  _____  \\  |  |\\   | |  `----.----)   |   \n");
-        printf("    \\__/     |__|  \\______|    |__|      \\______/  |__| | _| `._____||_______|   |_______/ |_______|_______/       |______/  |_______/__/     \\__\\ |__| \\__|  \\______|_______/    \n");
-                                                                                                                                                                                  
-
-
+    else{
+        printf("\n les Blanc gagnent par echec et mat \n");
     }
     
 }

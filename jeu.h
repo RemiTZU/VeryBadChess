@@ -3,14 +3,7 @@
 
 #include <echiquier.h>
 
-/**
- * @brief Fonction permettant de vérifier les coordonnées de l'utilisateur et de remplir le tableau coordonnee
- * permettant ainsi des manipulations avec le tableau de structure de l'échiquier
- *
- * @param taille --> Taille de l'échiquier
- * @param coordonnee --> Tableau d'entiers destiné à  être complété par les coordonnées compréhensible par la machine
- */
-void acquisitioncoordonnees(int taille, int coordonnee[2]);
+
 
 /**
  * @brief Fonction utilisée dans la fonction acquisitioncoordonnées(ex si l'utilisateur rentre A5 dans un echiquier 6
@@ -174,9 +167,9 @@ Bool EchecEtMatContre(int taille, Piece **echiquier, int coordonneePieceMetenEch
  * @param MiseEnEchec --> Couleur du Roi mis en échec 
  * @param MetEnEchec  --> Couleur du Roi mis en échec 
  * @param echiquier -->  Structure de Piece 
- * @return Bool --> ressort VRAI si le roi n'est pas en echec et mat 
+ * @return Bool --> ressort VRAI si le roi est en echec et mat 
  */
-Bool PasEchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
+Bool EchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
 
 /**
  * @brief free des tableaux à deux dimensions mallocer

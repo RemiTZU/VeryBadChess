@@ -4,6 +4,16 @@
 #include <echiquier.h>
 #include <jeu.h>
 
+
+/**
+ * @brief Fonction permettant de vérifier les coordonnées de l'utilisateur et de remplir le tableau coordonnee
+ * permettant ainsi des manipulations avec le tableau de structure de l'échiquier
+ *
+ * @param taille --> Taille de l'échiquier
+ * @param coordonnee --> Tableau d'entiers destiné à  être complété par les coordonnées compréhensible par la machine
+ */
+void acquisitioncoordonnees(int taille, int coordonnee[2]);
+
 /**
  * @brief Fonction qui rempli le menu de caractère ASCII de notre choix
  *
@@ -37,14 +47,26 @@ void affichage(int taille, Piece** echiquier);
 void menu();
 
 /**
- * @brief Utile dans Partie
+ * @brief 
  * 
- * @param taille  --> taille de l'échiquier (6 x 6 par exemple) 
- * @param echiquier -->  Structure de Piece 
- * @param CoordonneeInit --> Coordonnée de départ entrée par l'utilisateur
- * @param CoordonneFinit --> Coordonnée d'arrivée entrée par l'utilisateur 
+ * @param taille 
+ * @param CoordonneeInit 
+ * @param CoordonneeFinit 
+ * @param MisenEchec 
+ * @param MetEnEchec 
+ * @param CoordonneRoi 
+ * @return Bool 
  */
-void CoupDansPartie(int taille,Piece** echiquier,int CoordonneeInit[2],int CoordonneeFinit[2],Couleur Joue);
+Bool MouvementLegal(int taille,int CoordonneeInit[2], int CoordonneeFinit[2],Piece** echiquier, Couleur MisenEchec, Couleur MetEnEchec, int CoordonneRoi[2]);
+
+/**
+ * @brief 
+ * 
+ * @param taille 
+ * @param CoordonneeInit 
+ * @param CoordonneeFinit 
+ */
+void Coup(int taille,int CoordonneeInit[2],int CoordonneeFinit[2]);
 
 
 /**
