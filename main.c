@@ -63,7 +63,7 @@ int main()
         echiquier = initializeechiquier(taille);
         partie(taille,echiquier);
         free(echiquier);
-        system("cls");
+        
         
         
         break;

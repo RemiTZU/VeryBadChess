@@ -328,6 +328,8 @@ void partie(int taille , Piece** echiquier){
                 PositionRoi(CoordonneeRoiBlanc,BLANC,taille,echiquier);    
             }
             Mouvement(coordonneeDepart,coordonneeArrive,echiquier);
+            echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
+
 
            
         }
@@ -344,13 +346,15 @@ void partie(int taille , Piece** echiquier){
                 Coup(taille,coordonneeDepart,coordonneeArrive);
                 PositionRoi(CoordonneeRoiNoir,NOIR,taille,echiquier);    
             }
-            Mouvement(coordonneeDepart,coordonneeArrive,echiquier);  
+            Mouvement(coordonneeDepart,coordonneeArrive,echiquier); 
+            echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++; 
         }
+
         tour++;
          
     }       
 
-    
+    affichage(taille,echiquier);
     if(EchecEtMat(taille,CoordonneeRoiBlanc,BLANC,NOIR,echiquier) == VRAI){
         printf("\n les Noirs gagnent par echec et mat \n");
     }

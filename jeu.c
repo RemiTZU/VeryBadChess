@@ -432,14 +432,16 @@ int** EchecRoi(int taille, int CoordonneRoi[2], Piece** echiquier,Couleur MiseEn
             }
         }
     }    
+    
+    
     if (*TabPieceEchec == NULL){
         free(TabPieceEchec);
         TabPieceEchec = NULL;
         *tailleTabtmp = 0 ;
     }
 
-
     *tailleTabtmp = taillel -1;
+   
 
 
     return TabPieceEchec;
@@ -456,6 +458,11 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
     int yR = CoordonneRoi[0];
     int xR = CoordonneRoi[1];
     int NewCoordonneeRoi[2];
+    Piece vide;
+    vide.nom = 0;
+    vide.couleur = -1;
+    vide.aff = ' ';
+    Piece tmp;
    
 
     if (yR - 1 >= 0 && xR == CoordonneRoi[1] && echiquier[yR - 1][xR].couleur != MiseEnEchec)
@@ -463,16 +470,16 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
 
         NewCoordonneeRoi[0] = yR - 1;
         NewCoordonneeRoi[1] = xR;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
-
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
         freeTab(&TabPieceEchec, tailleuseless);
     }
     if (yR + 1 < taille && xR == CoordonneRoi[1] && echiquier[yR + 1][xR].couleur != MiseEnEchec)
@@ -480,33 +487,35 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
 
         NewCoordonneeRoi[0] = yR + 1;
         NewCoordonneeRoi[1] = xR;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
 
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
+        freeTab(&TabPieceEchec, tailleuseless);
     }
 
     if (xR - 1 >= 0 && yR == CoordonneRoi[0] && echiquier[yR][xR - 1].couleur != MiseEnEchec)
     {
         NewCoordonneeRoi[0] = yR;
         NewCoordonneeRoi[1] = xR - 1;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
 
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
-
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
         freeTab(&TabPieceEchec, tailleuseless);
     }
 
@@ -515,17 +524,17 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
 
         NewCoordonneeRoi[0] = yR;
         NewCoordonneeRoi[1] = xR + 1;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
 
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
-
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
         freeTab(&TabPieceEchec, tailleuseless);
     }
     if (yR - 1 >= 0 && xR - 1 >= 0 && echiquier[yR - 1][xR - 1].couleur != MiseEnEchec)
@@ -533,17 +542,17 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
 
         NewCoordonneeRoi[0] = yR - 1;
         NewCoordonneeRoi[1] = xR - 1;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
 
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
-
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
         freeTab(&TabPieceEchec, tailleuseless);
     }
     if (yR - 1 >= 0 && xR + 1 < taille && echiquier[yR - 1][xR + 1].couleur != MiseEnEchec)
@@ -551,17 +560,17 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
 
         NewCoordonneeRoi[0] = yR - 1;
         NewCoordonneeRoi[1] = xR + 1;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
 
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
-
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
         freeTab(&TabPieceEchec, tailleuseless);
     }
     if (yR + 1 < taille && xR + 1 < taille && echiquier[yR + 1][xR + 1].couleur != MiseEnEchec)
@@ -569,17 +578,17 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
 
         NewCoordonneeRoi[0] = yR + 1;
         NewCoordonneeRoi[1] = xR + 1;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
 
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
-
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
         freeTab(&TabPieceEchec, tailleuseless);
     }
     if (yR + 1 < taille && xR - 1 >= 0 && echiquier[yR + 1][xR - 1].couleur != MiseEnEchec)
@@ -587,20 +596,19 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
 
         NewCoordonneeRoi[0] = yR + 1;
         NewCoordonneeRoi[1] = xR - 1;
-        Mouvement(CoordonneRoi,NewCoordonneeRoi,echiquier);
+        tmp = echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]];
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]]= vide;
         TabPieceEchec = EchecRoi(taille, NewCoordonneeRoi, echiquier, MiseEnEchec, MetEnEchec, &tailleuseless);
 
         if (TabPieceEchec == NULL)
         {
             verif = VRAI;
-            freeTab(&TabPieceEchec, tailleuseless);
-            Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
+            echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
             return verif;
         }
-
+        echiquier[NewCoordonneeRoi[0]][NewCoordonneeRoi[1]] = tmp;
         freeTab(&TabPieceEchec, tailleuseless);
     }
-    Mouvement(NewCoordonneeRoi,CoordonneRoi,echiquier);
     return verif; 
 }
 
@@ -1466,28 +1474,23 @@ Bool EchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur Me
     TabEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &tailletableau);
     
     if (TabEchec != NULL)
-    {
+    {   
+        CoordonnePieceMetEnEchec[0] = TabEchec[0][0];
+        CoordonnePieceMetEnEchec[1] = TabEchec[0][1];
         verifMvtElementaire = RoiMouvementElementaire(taille, CoordonneRoi, MiseEnEchec, MetEnEchec, echiquier);
         
         if (verifMvtElementaire == FAUX)
         {
-            if(tailletableau == 1){
-               CoordonnePieceMetEnEchec[0] = TabEchec[0][0];
-               CoordonnePieceMetEnEchec[1] = TabEchec[0][1];
-               verifContre = EchecEtMatContre(taille,echiquier,CoordonnePieceMetEnEchec,MiseEnEchec,MetEnEchec,CoordonneRoi);
-               if(verifContre == FAUX){
-                   verif = VRAI;
-               }
-            }else{
-                if(tailletableau > 1){
-                    verif = VRAI;
-                }
+            verifContre =EchecEtMatContre(taille,echiquier,CoordonnePieceMetEnEchec, MetEnEchec,MiseEnEchec,CoordonneRoi);
+            if(verifContre ==  FAUX){
+                verif = VRAI;
             }
         }
+        freeTab(&TabEchec, tailletableau);
+        tailletableau = 0;
     }
     
-    freeTab(&TabEchec, tailletableau);
-    tailletableau = 0;
+    
     return verif;
 }
 
