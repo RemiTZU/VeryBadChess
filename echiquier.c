@@ -75,35 +75,6 @@ void freechiquier(int taille, Piece*** echiquier)
     }
 }
 
-void reverse(int taille, Piece **echiquier)
-{
-
-    Piece tmp;
-
-    for (int i = 0; i < taille; i++)
-    {
-
-        for (int j = 0; j < taille / 2; j++)
-        {
-
-            tmp = echiquier[i][j];
-            echiquier[i][j] = echiquier[i][taille - j - 1];
-            echiquier[i][taille - j - 1] = tmp;
-        }
-    }
-
-    for (int j = 0; j < taille; j++)
-    {
-
-        for (int i = 0; i < taille / 2; i++)
-        {
-
-            tmp = echiquier[i][j];
-            echiquier[i][j] = echiquier[taille - i - 1][j];
-            echiquier[taille - i - 1][j] = tmp;
-        }
-    }
-}
 
 void MiseEnPlaceRoi(Piece** echiquier, int taille)
 {

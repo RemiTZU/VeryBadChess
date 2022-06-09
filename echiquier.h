@@ -59,13 +59,6 @@ Piece** initializeechiquier(int taille);
  */
 void freechiquier(int taille, Piece*** echiquier);
 
-/**
- * @brief Reverse l'echiquier permettant ainsi aux joueurs de voir leurs echiquier de la bonne manière
- *
- * @param taille -> taille de l'echiquier
- * @param echiquier -> Tableau à  deux dimensions de structure
- */
-void reverse(int taille, Piece** echiquier);
 
 /**
  * @brief Utile dans InitializeEchiquier pour placer le roi à chaque début de partie
