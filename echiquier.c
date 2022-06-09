@@ -1,5 +1,14 @@
 #include <echiquier.h>
 
+
+
+/******************************************************************************************************/
+/**
+ * @brief Initialise un echiquier de la taille choisit
+ *
+ * @param taille -> taille de l'échiquier
+ * @return Piece**
+ */
 Piece** initializeechiquier(int taille)
 {
 
@@ -44,6 +53,13 @@ Piece** initializeechiquier(int taille)
     return echiquier;
 }
 
+/******************************************************************************************************/
+/**
+ * @brief Libère la mémoire alloué pour l'échiquier
+ *
+ * @param taille -> taille de l'échiquier
+ * @param echiquier -> Tableau à  deux dimensions de structures
+ */
 void freechiquier(int taille, Piece*** echiquier)
 {
 
@@ -59,6 +75,14 @@ void freechiquier(int taille, Piece*** echiquier)
     }
 }
 
+
+/******************************************************************************************************/
+/**
+ * @brief Utile dans InitializeEchiquier pour placer le roi à chaque début de partie
+ *
+ * @param echiquier--> structure de Pièce
+ * @param taille --> taille de l'echiquier
+ */
 void MiseEnPlaceRoi(Piece** echiquier, int taille)
 {
 

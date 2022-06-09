@@ -16,7 +16,7 @@ typedef enum {
 typedef enum {
     BLANC = 0,
     NOIR = 1,
-    EMPTY = -1
+    EMPTY = 2
 } Couleur;
 
 typedef enum {
@@ -30,16 +30,13 @@ typedef enum {
 
 } Nom;
 
-/**
- * @brief 
- * 
- */
+/*Structure représantant une pièce d'un echiquier*/
 typedef struct
 {
-    Nom nom;
-    Couleur couleur;
-    char aff;
-    int coup;
+    Nom nom; //Nom de la pièce
+    Couleur couleur;//Couleur de la pièce 
+    char aff;//Son caractère d'affichage 
+    int coup;// Le nombre de coup quelle a effectué dans une partie 
 
 } Piece;
 

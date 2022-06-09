@@ -1,5 +1,14 @@
 #include <affichage.h>
 
+/***********************************************************************************************************************************************************************/
+
+/**
+ * @brief Fonction permettant de vérifier les coordonnées de l'utilisateur et de remplir le tableau coordonnee
+ * permettant ainsi des manipulations avec le tableau de structure de l'échiquier
+ *
+ * @param taille --> Taille de l'échiquier
+ * @param coordonnee --> Tableau d'entiers représentant les indexs du tableau de structure(format: ligne-colonne)
+ */
 void acquisitioncoordonnees(int taille, int coordonnee[2])
 {
     char rep[50];
@@ -7,7 +16,7 @@ void acquisitioncoordonnees(int taille, int coordonnee[2])
     int abcisse;
     int ordonne;
 
-    printf("rentrer une lettre pour les abcisses et un nombre pour les "
+    printf("Rentre une lettre pour les abcisses et un nombre pour les "
            "ordonn%ces\n",
         130);
 
@@ -15,8 +24,8 @@ void acquisitioncoordonnees(int taille, int coordonnee[2])
     fflush(stdin);
 
     while (sscanf(rep, "%c%d", &abcissetmp, &ordonne) == EOF || (abcissetmp < 65 || abcissetmp > taille + 65) || (ordonne < 0 || ordonne > taille)) {
-        printf("Oups, il semblerait que les coordonn%ces rentr%ce ne soit pas "
-               "valide.(exemple de coordonn%ces valident #%c%d# pour la taille "
+        printf("Oups, il semblerait que les coordonn%ces rentr%ces ne soient pas "
+               "valides.(exemple de coordonn%ces valides #%c%d# pour la taille "
                "%d par "
                "%d)\n",
             130, 130, 130, 65, taille, taille, taille);
@@ -31,6 +40,31 @@ void acquisitioncoordonnees(int taille, int coordonnee[2])
     coordonnee[1] = abcisse;
 }
 
+/***********************************************************************************************************************************************************************/
+/**
+ * @brief Fonction qui rempli le menu de caractère ASCII de notre choix
+ *
+ * @param taille -> taille du menu
+ * @param motifascii -> Motif ASCII que l'on choisit
+ */
+void asciiboucle(int taille, int motifascii)
+{
+
+    for (int i = 0; i < taille; i++) {
+
+        printf("%c", motifascii);
+    }
+}
+
+/***********************************************************************************************************************************************************************/
+
+/**
+ * @brief Fonction qui rempli le menu avec les phrase de notre choix. Attention il faut que la taille des phrases
+ * soit inférieur à  la taille du menu ( il faut -2 caractères sur la taille du menu), pour un affichage correct.
+ *
+ * @param ecriture -> Tableau de caractères que l'on veut afficher
+ * @param motifascii -> Motif du cadre du Menu
+ */
 void ecritureaffichage(char* ecriture, int motifascii)
 {
 
@@ -46,6 +80,14 @@ void ecritureaffichage(char* ecriture, int motifascii)
     printf("\n");
 }
 
+/***********************************************************************************************************************************************************************/
+
+/**
+ * @brief Fonction qui affiche l'échiquier de la partie en cours
+ *
+ * @param taille -> taille de l'échiquier
+ * @param echiquier -> Tableau  à  deux dimensions de structure de Pièce
+ */
 void affichage(int taille, Piece** echiquier)
 {
     printf("\n");
@@ -84,15 +126,12 @@ void affichage(int taille, Piece** echiquier)
         printf("   %c", k + 66); // Affichage des coordonnées en absisses
     }
 }
-void asciiboucle(int taille, int motifascii)
-{
+/***********************************************************************************************************************************************************************/
 
-    for (int i = 0; i < taille; i++) {
-
-        printf("%c", motifascii);
-    }
-}
-
+/**
+ * @brief Affiche le menu du jeu Very Bad Chess
+ *
+ */
 void menu()
 {
     int longueur = 39;
@@ -136,15 +175,43 @@ void menu()
     printf("\n");
 }
 
-void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2])
-{
+/***********************************************************************************************************************************************************************/
 
+/**
+ * @brief
+ *
+ * @param taille -> taille de l'échiquier
+ * @param CoordonneeInit--> Coordonnée de départ entrée par l'utilisateur
+ * @param CoordonneeFinit--> Coordonnée d'arriver entrée par l'utilisateur
+ * @param Joue --> couleur entrain de jouer 
+ */
+void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2],Couleur Joue)
+{
+    if(Joue == BLANC){
+        printf("\nC'est au tour des BLANC de jouer\n");
+    }
+    else{
+        printf("\nC'est au tour des NOIR de jouer\n");
+    }
     printf("\nChoisis une pi%cce %c d%cplacer...\n", 138, 133, 130);
     acquisitioncoordonnees(taille, CoordonneeInit);
-    printf("\nSur quelle case veux-tu d%cplacer ta pi%ce...\n", 130, 138);
+    printf("\nSur quelle case veux-tu d%cplacer ta pi%cce...\n", 130, 138);
     acquisitioncoordonnees(taille, CoordonneeFinit);
 }
 
+/***********************************************************************************************************************************************************************/
+
+/**
+ * @brief Fonction booléenne servant dans partie. Sert  à savoir si un mouvement est légal sous trois conditions : la légalité du mouvement la couleur suivant le tour et l'echec à la découverte deRoi
+ *
+ * @param taille -> taille de l'échiquier
+ * @param CoordonneeInit --> Coordonnée de départ entrée par l'utilisateur
+ * @param CoordonneeFinit --> Coordonnée d'arriver entrée par l'utilisateur
+ * @param MisenEchec --> Couleur du Roi mis en échec
+ * @param MetEnEchec --> Couleur du Roi mis en échec
+ * @param CoordonneRoi--> Coordonnées du Roi qui peut être en échec
+ * @return Bool --> VRAI si le mouvement est légal
+ */
 Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int CoordonneRoi[2])
 {
 
@@ -284,52 +351,70 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
     return verif;
 }
 
-void partie(int taille, Piece** echiquier)
+/***********************************************************************************************************************************************************************/
+
+/**
+ * @brief Assure le bon déroulement d'une partie de Very Bad CHess
+ *
+ */
+void partie(int taille, Piece** echiquier, int tour)
 {
 
     int CoordonneeRoiBlanc[2];
     int CoordonneeRoiNoir[2];
     int coordonneeDepart[2];
     int coordonneeArrive[2];
-    int tour = 0;
+    int couptotalBlanc = 0;
+    int couptotalNoir = 0;
+    
 
     while (EchecEtMat(taille, CoordonneeRoiBlanc, BLANC, NOIR, echiquier) == FAUX && EchecEtMat(taille, CoordonneeRoiNoir, NOIR, BLANC, echiquier) == FAUX) {
 
+        
+        printf("/***************************************************************************************/\n");
+        printf("\t\t\t Nombre de coup des Blancs: %d   Nombre de coup des noirs: %d\n",couptotalBlanc,couptotalNoir);
         affichage(taille, echiquier);
-        Coup(taille, coordonneeDepart, coordonneeArrive);
-
+        
         if (tour % 2 == 0) {
             PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);
+            Coup(taille, coordonneeDepart, coordonneeArrive,BLANC);
             while (MouvementLegal(taille, coordonneeDepart, coordonneeArrive, echiquier, BLANC, NOIR, CoordonneeRoiBlanc) == FAUX || echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != BLANC) {
                 if (echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != BLANC) {
-                    printf("Vous avec s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
+                    printf("Vous avez s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
                 }
-                Coup(taille, coordonneeDepart, coordonneeArrive);
+                Coup(taille, coordonneeDepart, coordonneeArrive,BLANC);
                 PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);
             }
             Mouvement(coordonneeDepart, coordonneeArrive, echiquier);
             echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
+            couptotalBlanc++;
 
         } else {
             PositionRoi(CoordonneeRoiNoir, NOIR, taille, echiquier);
+            Coup(taille, coordonneeDepart, coordonneeArrive,NOIR);
             while (MouvementLegal(taille, coordonneeDepart, coordonneeArrive, echiquier, NOIR, BLANC, CoordonneeRoiNoir) == FAUX || echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != NOIR) {
                 if (echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != NOIR) {
-                    printf("Vous avec s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
+                    printf("Vous avez s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
                 }
-                Coup(taille, coordonneeDepart, coordonneeArrive);
+                Coup(taille, coordonneeDepart, coordonneeArrive,NOIR);
                 PositionRoi(CoordonneeRoiNoir, NOIR, taille, echiquier);
             }
             Mouvement(coordonneeDepart, coordonneeArrive, echiquier);
             echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
+            couptotalNoir++;
         }
 
         tour++;
+        Sauvegarde("save.txt",taille,tour,echiquier);
     }
 
+    printf("/***************************************************************************************/\n");
     affichage(taille, echiquier);
     if (EchecEtMat(taille, CoordonneeRoiBlanc, BLANC, NOIR, echiquier) == VRAI) {
-        printf("\n les Noirs gagnent par echec et mat \n");
+        printf("\n les Noirs gagnent par Echec Et Mat en %d coups \n",couptotalBlanc+1);
     } else {
-        printf("\n les Blanc gagnent par echec et mat \n");
+        printf("\n les Blanc gagnent par Echec Et Mat en %d coups\n", couptotalNoir+1);
     }
 }
+
+/***********************************************************************************************************************************************************************/

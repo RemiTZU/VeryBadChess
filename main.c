@@ -4,6 +4,7 @@ int main()
 {
     int n = -1;
     int taille = 0;
+    int tour = 0;
     char rep[20];
     Piece** echiquier;
     srand(time(NULL));
@@ -56,13 +57,15 @@ int main()
         }
 
         echiquier = initializeechiquier(taille);
-        partie(taille, echiquier);
-        free(echiquier);
+        partie(taille, echiquier,tour);
+        freechiquier(taille,&echiquier);
 
         break;
 
     case (2):
-        // completer
+        echiquier = LectureSauvegarde("save.txt",&taille,&tour);
+        partie(taille, echiquier,tour);
+        freechiquier(taille,&echiquier);
         break;
     case (3):
 

@@ -8,7 +8,7 @@ INCLUDEDIR = -I. #List of direcotries containing headers
 #Library-related macros
 LIBCORENAME = VeryBadChess #Core name of the library that must be generated
 LIBTARGET :=$(LIBCORENAME:=.dll) #adding the "lib" prefix and the .so extension to LIBCORENAME
-LIBSOURCE = affichage echiquier jeu #list of .c files composing the library without extension
+LIBSOURCE = affichage echiquier jeu sauvegarde #list of .c files composing the library without extension
 LIBSOURCECFILE = $(LIBSOURCE:=.c) #adding .c extensions to all files listed in LIBSOURCE variable
 LIBSOURCEOFILE = $(LIBSOURCE:=.o) #adding .o extensions to all files listed in LIBSOURCE variable
 
