@@ -7,7 +7,7 @@ int main()
     char rep[20];
     Piece** echiquier;
     srand(time(NULL));
-    
+
     system("cls");
     printf("  _____ _____   _ \n");
     printf(" |_   _|_  | | | |\n");
@@ -30,10 +30,8 @@ int main()
     scanf("%s", rep);
     fflush(stdin);
 
-    if (sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3)
-    {
-        do
-        {
+    if (sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3) {
+        do {
 
             printf("Trois choix possibles (1,2,3)\n");
             scanf("%s", rep);
@@ -42,18 +40,15 @@ int main()
         } while ((sscanf(rep, "%d", &n) == EOF || n <= 0 || n > 3));
     }
 
-    switch (n)
-    {
+    switch (n) {
     case (1):
-        printf("Quelle taille de d'%cchiquier voulez vous ?\n",130);
+        printf("Quelle taille de d'%cchiquier voulez vous ?\n", 130);
         scanf("%s", rep);
         fflush(stdin);
 
-        if (sscanf(rep, "%d", &taille) == EOF || taille < 6 || taille > 12)
-        {
-            do
-            {
-                printf("Taille d'%cchiquier possible(6/7/8/9/10/11/12) \n",130);
+        if (sscanf(rep, "%d", &taille) == EOF || taille < 6 || taille > 12) {
+            do {
+                printf("Taille d'%cchiquier possible(6/7/8/9/10/11/12) \n", 130);
                 scanf("%s", rep);
                 fflush(stdin);
 
@@ -61,23 +56,19 @@ int main()
         }
 
         echiquier = initializeechiquier(taille);
-        partie(taille,echiquier);
+        partie(taille, echiquier);
         free(echiquier);
-        
-        
-        
+
         break;
-        
+
     case (2):
         // completer
         break;
     case (3):
 
-        printf("Oh, dommage %c bientot\n",133);
+        printf("Oh, dommage %c bientot\n", 133);
         break;
     }
 
     return EXIT_SUCCESS;
 }
-
-

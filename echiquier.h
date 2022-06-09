@@ -8,22 +8,18 @@
 #include <string.h>
 #include <time.h>
 
-
-typedef enum
-{
+typedef enum {
     VRAI = 1,
     FAUX = 0
 } Bool;
 
-typedef enum
-{
+typedef enum {
     BLANC = 0,
     NOIR = 1,
     EMPTY = -1
 } Couleur;
 
-typedef enum
-{
+typedef enum {
     VIDE = 0,
     PION = 1,
     CAVALIER = 2,
@@ -34,13 +30,17 @@ typedef enum
 
 } Nom;
 
+/**
+ * @brief 
+ * 
+ */
 typedef struct
 {
     Nom nom;
     Couleur couleur;
     char aff;
     int coup;
- 
+
 } Piece;
 
 /**
@@ -58,7 +58,6 @@ Piece** initializeechiquier(int taille);
  * @param echiquier -> Tableau à  deux dimensions de structures
  */
 void freechiquier(int taille, Piece*** echiquier);
-
 
 /**
  * @brief Utile dans InitializeEchiquier pour placer le roi à chaque début de partie

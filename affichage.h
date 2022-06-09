@@ -3,7 +3,7 @@
 
 #include <echiquier.h>
 #include <jeu.h>
-
+#include <sauvegarde.h>
 
 /**
  * @brief Fonction permettant de vérifier les coordonnées de l'utilisateur et de remplir le tableau coordonnee
@@ -30,7 +30,7 @@ void asciiboucle(int taille, int motifascii);
  * @param motifascii -> Motif du cadre du Menu
  * @param temps -> Temps nécessaire à l'écriture des paramètres (optionnel)
  */
-void ecritureaffichage(char * ecriture, int motifascii);
+void ecritureaffichage(char* ecriture, int motifascii);
 
 /**
  * @brief Fonction qui affiche l'échiquier de la partie en cours
@@ -47,34 +47,31 @@ void affichage(int taille, Piece** echiquier);
 void menu();
 
 /**
- * @brief 
- * 
- * @param taille 
- * @param CoordonneeInit 
- * @param CoordonneeFinit 
- * @param MisenEchec 
- * @param MetEnEchec 
- * @param CoordonneRoi 
- * @return Bool 
+ * @brief
+ *
+ * @param taille
+ * @param CoordonneeInit
+ * @param CoordonneeFinit
+ * @param MisenEchec
+ * @param MetEnEchec
+ * @param CoordonneRoi
+ * @return Bool
  */
-Bool MouvementLegal(int taille,int CoordonneeInit[2], int CoordonneeFinit[2],Piece** echiquier, Couleur MisenEchec, Couleur MetEnEchec, int CoordonneRoi[2]);
+Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], Piece** echiquier, Couleur MisenEchec, Couleur MetEnEchec, int CoordonneRoi[2]);
 
 /**
- * @brief 
- * 
- * @param taille 
- * @param CoordonneeInit 
- * @param CoordonneeFinit 
+ * @brief
+ *
+ * @param taille
+ * @param CoordonneeInit
+ * @param CoordonneeFinit
  */
-void Coup(int taille,int CoordonneeInit[2],int CoordonneeFinit[2]);
-
+void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2]);
 
 /**
  * @brief Assure le bon déroulement d'une partie de Very Bad CHess
- * 
+ *
  */
 void partie(int taille, Piece** echiquier);
-
-
 
 #endif
