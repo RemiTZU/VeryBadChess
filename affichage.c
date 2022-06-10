@@ -242,7 +242,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         TableauEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &TailleEchec);
 
         if (TableauEchec != NULL) {
-            printf("Attention ton coup met en %cchec ton Roi", 130);
+            printf("Attention ton coup met en %cchec ton Roi\n", 130);
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
@@ -262,7 +262,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         TableauEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &TailleEchec);
 
         if (TableauEchec != NULL) {
-            printf("Attention ton coup met en %cchec ton Roi", 130);
+            printf("Attention ton coup met en %cchec ton Roi\n", 130);
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
@@ -280,7 +280,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         TableauEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &TailleEchec);
 
         if (TableauEchec != NULL) {
-            printf("Attention ton coup met en %cchec ton Roi", 130);
+            printf("Attention ton coup met en %cchec ton Roi\n", 130);
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
@@ -298,7 +298,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         TableauEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &TailleEchec);
 
         if (TableauEchec != NULL) {
-            printf("Attention ton coup met en %cchec ton Roi", 130);
+            printf("Attention ton coup met en %cchec ton Roi\n", 130);
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
@@ -310,14 +310,14 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         verif = DameVerification(CoordonneeInit, CoordonneeFinit, echiquier);
 
         if (verif == FAUX) {
-            printf("Attention ton coup ne marche pas pour une dame\n");
+            printf("Attention ton coup ne marche pas pour une dame\n\n");
             return verif;
         }
         Mouvement(CoordonneeInit, CoordonneeFinit, echiquier);
         TableauEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &TailleEchec);
 
         if (TableauEchec != NULL) {
-            printf("Attention ton coup met en %cchec ton Roi", 130);
+            printf("Attention ton coup met en %cchec ton Roi\n", 130);
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
@@ -336,7 +336,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         TableauEchec = EchecRoi(taille, CoordonneRoi, echiquier, MiseEnEchec, MetEnEchec, &TailleEchec);
 
         if (TableauEchec != NULL) {
-            printf("Attention ton coup met en %cchec ton Roi", 130);
+            printf("Attention ton coup met en %cchec ton Roi\n", 130);
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
@@ -367,14 +367,21 @@ void partie(int taille, Piece** echiquier, int tour)
     int couptotalBlanc = 0;
     int couptotalNoir = 0;
     
+    PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);         
+    PositionRoi(CoordonneeRoiNoir, NOIR, taille, echiquier);
+    
+   
 
     while (EchecEtMat(taille, CoordonneeRoiBlanc, BLANC, NOIR, echiquier) == FAUX && EchecEtMat(taille, CoordonneeRoiNoir, NOIR, BLANC, echiquier) == FAUX) {
-
         
         printf("/***************************************************************************************/\n");
         printf("\t\t\t Nombre de coup des Blancs: %d   Nombre de coup des noirs: %d\n",couptotalBlanc,couptotalNoir);
+        
         affichage(taille, echiquier);
         
+        if(tour == 0){
+            printf("\nDURANT TOUTE LA PARTIE TU POURRAS ABANDONNER EN TAPANT (X) OU SAUVEGARDER EN TAPANT (S)...\nBonne partie...\n");
+        }
         if (tour % 2 == 0) {
             PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);
             Coup(taille, coordonneeDepart, coordonneeArrive,BLANC);
@@ -403,9 +410,9 @@ void partie(int taille, Piece** echiquier, int tour)
             echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
             couptotalNoir++;
         }
-
+       
         tour++;
-        Sauvegarde("save.txt",taille,tour,echiquier);
+       
     }
 
     printf("/***************************************************************************************/\n");
@@ -418,3 +425,10 @@ void partie(int taille, Piece** echiquier, int tour)
 }
 
 /***********************************************************************************************************************************************************************/
+
+
+void systemclear(){
+    
+
+
+}

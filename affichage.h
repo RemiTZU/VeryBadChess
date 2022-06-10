@@ -74,4 +74,5 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
  */
 void partie(int taille, Piece** echiquier,int tour);
 
+
 #endif

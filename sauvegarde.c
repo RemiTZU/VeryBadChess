@@ -3,7 +3,7 @@
 void Sauvegarde(const char* filepath, int taille, int tour, Piece** echiquier)
 {
     FILE* fichier = fopen(filepath, "w");
-    fprintf(fichier, "%d\n%d\n", taille, tour);
+    fprintf(fichier, "%d\n%d\n",taille,tour);
 
     for (int i = 0; i < taille; i++) {
         for (int j = 0; j < taille; j++) {
@@ -30,7 +30,7 @@ Piece** LectureSauvegarde(const char* filepath,int* taille,int* tour){
 Piece** InitializeEchiquierS(FILE* fichier,int taille)
 {
     
-    char affichagePiece[] = { ' ', 'P', 'C', 'F', 'T', 'D', 'R' };
+    char affichagePiece[7] = {' ', 'P', 'C', 'F', 'T', 'D', 'R'};
 
     Piece** echiquier = (Piece**)malloc(sizeof(Piece*) * taille);
 
@@ -51,7 +51,7 @@ Piece** InitializeEchiquierS(FILE* fichier,int taille)
 
                     echiquier[i][j].aff = affichagePiece[echiquier[i][j].nom];
                 }
-                printf("onéal\n");
+                
             } else {
                 fprintf(stderr, "Les pieces n'ont pas %ct%c attribu%ces\n ",130,130,130);
             }

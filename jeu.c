@@ -1366,10 +1366,13 @@ Bool EchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur Me
         verifMvtElementaire = RoiMouvementElementaire(taille, CoordonneRoi, MiseEnEchec, MetEnEchec, echiquier);
 
         if (verifMvtElementaire == FAUX) {
+            printf("\nTon roi est en echec !\n");
             verifContre = EchecEtMatContre(taille, echiquier, CoordonnePieceMetEnEchec, MetEnEchec, MiseEnEchec, CoordonneRoi);
             if (verifContre == FAUX) {
                 verif = VRAI;
             }
+        }else{
+            printf("\nTon roi est en echec !\n");
         }
         freeTab(&TabEchec, tailletableau);
         tailletableau = 0;

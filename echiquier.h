@@ -8,6 +8,7 @@
 #include <string.h>
 #include <time.h>
 
+
 typedef enum {
     VRAI = 1,
     FAUX = 0

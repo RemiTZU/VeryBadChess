@@ -59,12 +59,11 @@ int main()
         echiquier = initializeechiquier(taille);
         partie(taille, echiquier,tour);
         freechiquier(taille,&echiquier);
-
-        break;
+         break;
 
     case (2):
         echiquier = LectureSauvegarde("save.txt",&taille,&tour);
-        partie(taille, echiquier,tour);
+        partie(taille,echiquier,tour);
         freechiquier(taille,&echiquier);
         break;
     case (3):
