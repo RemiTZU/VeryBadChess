@@ -89,11 +89,17 @@ void ecritureaffichage(char* ecriture, int motifascii)
  * @param echiquier -> Tableau  à  deux dimensions de structure de Pièce
  */
 void affichage(int taille, Piece** echiquier)
-{
+{   
     printf("\n");
-    for (int i = 0; i < taille; i++) {
+    printf("  %c",218);
+    for(int i = 0; i<taille-1;i++){
+        printf("%c%c%c%c%c",196,196,196,196,194);
+    }
+    printf("%c%c%c%c%c\n",196,196,196,196,191);
 
-        if (taille - i >= 10) // Condition pour eviter un décalage à partir  de 10
+    for(int i = 0 ; i<taille ;i++){
+           
+           if (taille - i >= 10) // Condition pour eviter un décalage à partir  de 10
         {
             printf("%d", taille - i); // Affichage des coordonnées en ordonnées de la grille
             printf("%c ", 179);
@@ -102,28 +108,33 @@ void affichage(int taille, Piece** echiquier)
             printf(" %d", taille - i);
             printf("%c ", 179);
         }
-
-        for (int j = 0; j < taille; j++) {
-            printf("[%c%c]", echiquier[i][j].aff,
-                echiquier[i][j].couleur == BLANC      ? 'B'
-                    : echiquier[i][j].couleur == NOIR ? 'N'
-                                                      : ' ');
+        for(int j = 0; j<taille;j++){
+            printf("%c%c %c ",echiquier[i][j].aff, echiquier[i][j].couleur == BLANC ? 'B': echiquier[i][j].couleur == NOIR ? 'N': ' ', 179);
         }
-
+       
         printf("\n");
+        
+        if(i< taille-1){
+            printf("  %c",195);
+            for(int k = 0; k<taille-1;k++){
+                printf("%c%c%c%c%c",196,196,196,196,197);
+            }
+            printf("%c%c%c%c%c",196,196,196,196,180);
+            printf("\n");
+        }
     }
 
-    printf("    %c", 196);
-    for (int k = 0; k < ((taille)*4) - 1; k++) {
-        printf("%c", 196);
+
+     printf("  %c",192);
+    for(int i = 0; i<taille-1;i++){
+        printf("%c%c%c%c%c",196,196,196,196,193);
     }
-
-    printf("\n");
-
-    printf("     %c", 65);
+    printf("%c%c%c%c%c\n",196,196,196,196,217);
+   
+    printf("    %c", 65);
 
     for (int k = 0; k < taille - 1; k++) {
-        printf("   %c", k + 66); // Affichage des coordonnées en absisses
+        printf("    %c", k + 66); // Affichage des coordonnées en absisses
     }
 }
 /***********************************************************************************************************************************************************************/
