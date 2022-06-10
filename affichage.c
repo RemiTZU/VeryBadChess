@@ -401,7 +401,6 @@ void partie(int taille, Piece** echiquier, int tour)
                 break;
             }else{
                 printf("/***************************************************************************************/\n");
-                printf("\t\t\t Nombre de coup des Blancs: %d   Nombre de coup des noirs: %d\n",couptotalBlanc,couptotalNoir);
                 affichage(taille, echiquier);
             }
         }
