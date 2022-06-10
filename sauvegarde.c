@@ -9,7 +9,7 @@ void Sauvegarde(const char* filepath, int taille, int tour, Piece** echiquier)
         for (int j = 0; j < taille; j++) {
             fprintf(fichier, "%d%d%d;", echiquier[i][j].nom, echiquier[i][j].couleur, echiquier[i][j].coup);
         }
-        // fprintf(fichier,"\n");
+        
     }
     fclose(fichier);
 }
@@ -17,12 +17,20 @@ void Sauvegarde(const char* filepath, int taille, int tour, Piece** echiquier)
 
 Piece** LectureSauvegarde(const char* filepath,int* taille,int* tour){
     
+    Piece** echiquier;
     FILE* fichier = fopen(filepath,"r");
-    fscanf(fichier,"%d\n",taille);
-    fscanf(fichier,"%d\n",tour);
+    if (fichier == NULL){
+       
+       echiquier = NULL;
 
-    Piece** echiquier = InitializeEchiquierS(fichier,*taille);
-    fclose(fichier);
+    }else{
+
+        fscanf(fichier,"%d\n",taille);
+        fscanf(fichier,"%d\n",tour);
+        echiquier = InitializeEchiquierS(fichier,*taille);
+        
+        fclose(fichier);
+    }
     return echiquier;
 }
 

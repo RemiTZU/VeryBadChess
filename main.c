@@ -43,7 +43,7 @@ int main()
 
     switch (n) {
     case (1):
-        printf("Quelle taille de d'%cchiquier voulez vous ?\n", 130);
+        printf("Quelle taille de d'%cchiquier veux-tu ?\n", 130);
         scanf("%s", rep);
         fflush(stdin);
 
@@ -59,12 +59,17 @@ int main()
         echiquier = initializeechiquier(taille);
         partie(taille, echiquier,tour);
         freechiquier(taille,&echiquier);
-         break;
+        break;
 
     case (2):
-        echiquier = LectureSauvegarde("save.txt",&taille,&tour);
-        partie(taille,echiquier,tour);
-        freechiquier(taille,&echiquier);
+        echiquier = LectureSauvegarde("save.txt", &taille , &tour);
+        if(echiquier == NULL){
+            printf("\nAucune sauvegarde existente \n");
+        }else{
+            partie(taille,echiquier,tour);
+            freechiquier(taille,&echiquier);
+        }
+       
         break;
     case (3):
 

@@ -343,6 +343,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             PositionRoi(CoordonneRoi, MiseEnEchec, taille, echiquier);
             return verif;
         }
+        
         break;
     }
     Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
@@ -366,7 +367,9 @@ void partie(int taille, Piece** echiquier, int tour)
     int coordonneeArrive[2];
     int couptotalBlanc = 0;
     int couptotalNoir = 0;
-    
+    char rep;
+    char rep1;
+
     PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);         
     PositionRoi(CoordonneeRoiNoir, NOIR, taille, echiquier);
     
@@ -375,13 +378,51 @@ void partie(int taille, Piece** echiquier, int tour)
     while (EchecEtMat(taille, CoordonneeRoiBlanc, BLANC, NOIR, echiquier) == FAUX && EchecEtMat(taille, CoordonneeRoiNoir, NOIR, BLANC, echiquier) == FAUX) {
         
         printf("/***************************************************************************************/\n");
-        printf("\t\t\t Nombre de coup des Blancs: %d   Nombre de coup des noirs: %d\n",couptotalBlanc,couptotalNoir);
+        
         
         affichage(taille, echiquier);
+        
+        printf("\nVeux tu sauvegarder (S), abandonner (X), continuer(autre)....\n");
+        scanf("%c",&rep);
+        fflush(stdin);
+
+        if(rep == 'S'){
+            Sauvegarde("save.txt",taille,tour,echiquier);
+            printf("Voulez vous quitter (O/N) ?\n");
+            scanf("%c", &rep1);
+            fflush(stdin);
+
+            while(rep1 != 'O' && rep1 != 'N'){
+                printf(" 'O' ou 'N' \n");
+                scanf("%c", &rep1);
+                fflush(stdin);
+            }
+            if(rep1 == 'O'){
+                break;
+            }else{
+                printf("/***************************************************************************************/\n");
+                printf("\t\t\t Nombre de coup des Blancs: %d   Nombre de coup des noirs: %d\n",couptotalBlanc,couptotalNoir);
+                affichage(taille, echiquier);
+            }
+        }
+        if(rep == 'X' ){
+                
+            if(tour%2 == 0){
+                printf("\n Les NOIRS gagnent par abandon \n");
+                break;
+            }else{
+                printf("\n Les BLANCS gagnent par abandon \n");
+                break;      
+            }
+
+         }
+            
+        
         
         if(tour == 0){
             printf("\nDURANT TOUTE LA PARTIE TU POURRAS ABANDONNER EN TAPANT (X) OU SAUVEGARDER EN TAPANT (S)...\nBonne partie...\n");
         }
+        
         if (tour % 2 == 0) {
             PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);
             Coup(taille, coordonneeDepart, coordonneeArrive,BLANC);
@@ -390,7 +431,6 @@ void partie(int taille, Piece** echiquier, int tour)
                     printf("Vous avez s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
                 }
                 Coup(taille, coordonneeDepart, coordonneeArrive,BLANC);
-                PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);
             }
             Mouvement(coordonneeDepart, coordonneeArrive, echiquier);
             echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
@@ -404,31 +444,26 @@ void partie(int taille, Piece** echiquier, int tour)
                     printf("Vous avez s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
                 }
                 Coup(taille, coordonneeDepart, coordonneeArrive,NOIR);
-                PositionRoi(CoordonneeRoiNoir, NOIR, taille, echiquier);
             }
             Mouvement(coordonneeDepart, coordonneeArrive, echiquier);
             echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
             couptotalNoir++;
         }
-       
         tour++;
+       
        
     }
 
-    printf("/***************************************************************************************/\n");
-    affichage(taille, echiquier);
-    if (EchecEtMat(taille, CoordonneeRoiBlanc, BLANC, NOIR, echiquier) == VRAI) {
-        printf("\n les Noirs gagnent par Echec Et Mat en %d coups \n",couptotalBlanc+1);
-    } else {
-        printf("\n les Blanc gagnent par Echec Et Mat en %d coups\n", couptotalNoir+1);
+    if(rep1 != 'O'  &&  rep != 'X'){
+        affichage(taille, echiquier);
+        if (EchecEtMat(taille, CoordonneeRoiBlanc, BLANC, NOIR, echiquier) == VRAI) {
+            printf("\n les Noirs gagnent par Echec Et Mat \n");
+        } else {
+            printf("\n les Blanc gagnent par Echec Et Mat \n");
+        }
     }
 }
 
 /***********************************************************************************************************************************************************************/
 
 
-void systemclear(){
-    
-
-
-}
