@@ -430,7 +430,7 @@ void partie(int taille, Piece** echiquier, int tour)
         
         
         if(tour == 0){
-            printf("\nDURANT TOUTE LA PARTIE TU POURRAS ABANDONNER EN TAPANT (X) OU SAUVEGARDER EN TAPANT (S)...\nBonne partie...\n");
+            printf("\nA CHAQUE DEBUT DE TOUR  TU POURRAS ABANDONNER EN TAPANT (X) OU SAUVEGARDER EN TAPANT (S)...\nBonne partie...\n");
         }
         
         if (tour % 2 == 0) {
