@@ -1345,7 +1345,7 @@ Bool EchecEtMatContre(int taille, Piece** echiquier, int coordonneePieceMetenEch
  * @param taille  --> taille de l'échiquier (6 x 6 par exemple)
  * @param CoordonneRoi --> Coordonnées du Roi qui est en echec
  * @param MiseEnEchec --> Couleur du Roi mis en échec
- * @param MetEnEchec  --> Couleur du Roi mis en échec
+ * @param MetEnEchec  --> Couleur du Roi qui met en échec
  * @param echiquier -->  Structure de Piece
  * @return Bool --> ressort VRAI si le roi est en echec et mat
  */
