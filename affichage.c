@@ -223,6 +223,7 @@ void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2],Couleur Joue
  * @param CoordonneRoi--> Coordonnées du Roi qui peut être en échec
  * @return Bool --> VRAI si le mouvement est légal
  */
+
 Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int CoordonneRoi[2])
 {
 
@@ -230,6 +231,8 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
     int TailleEchec = 0;
 
     Bool verif = VRAI;
+    Piece tmp;
+    tmp = echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]];
 
     switch (echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom) {
 
@@ -257,6 +260,8 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
+            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+
             return verif;
         }
         break;
@@ -277,6 +282,8 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
+            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+
             return verif;
         }
         break;
@@ -295,6 +302,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
+            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
             return verif;
         }
         break;
@@ -313,6 +321,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
+            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
             return verif;
         }
         break;
@@ -332,6 +341,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
+            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
             return verif;
         }
         break;
@@ -351,6 +361,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
+            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
             PositionRoi(CoordonneRoi, MiseEnEchec, taille, echiquier);
             return verif;
         }
@@ -358,6 +369,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         break;
     }
     Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
+    echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
     PositionRoi(CoordonneRoi, MiseEnEchec, taille, echiquier);
     freeTab(&TableauEchec, TailleEchec);
     return verif;
@@ -427,7 +439,7 @@ void partie(int taille, Piece** echiquier, int tour)
 
          }
             
-        
+        fflush(stdin);
         
         if(tour == 0){
             printf("\nA CHAQUE DEBUT DE TOUR  TU POURRAS ABANDONNER EN TAPANT (X) OU SAUVEGARDER EN TAPANT (S)...\nBonne partie...\n");

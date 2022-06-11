@@ -9,7 +9,7 @@ int main()
     Piece** echiquier;
     srand(time(NULL));
 
-    system("cls");
+    // system("cls");
     printf("  _____ _____   _ \n");
     printf(" |_   _|_  | | | |\n");
     printf("   | |  / /| |_| |\n");
