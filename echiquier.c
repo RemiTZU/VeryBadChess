@@ -1,6 +1,6 @@
 #include <echiquier.h>
 
-
+/* Echiquier.c regroupe les fonctions servant à initialiser l'échiquier et le libérer dans la mémoire*/
 
 /******************************************************************************************************/
 /**

@@ -1,5 +1,7 @@
 #include <jeu.h>
 
+/* Jeu.c regroupe toutes les fonctions utilent pour les vérifications des mouvements des pièces, de l'échec, échec et mat et le contre de l'échec*/
+
 /***********************************************************************************************************************************************************************/
 /**
  * @brief Fonction utilisée dans la fonction acquisitioncoordonnées(ex si l'utilisateur rentre A5 dans un echiquier 6
@@ -654,9 +656,8 @@ Bool EchecEtMatContre(int taille, Piece** echiquier, int coordonneePieceMetenEch
 
     if (echiquier[yp][xp].nom == CAVALIER || echiquier[yp][xp].nom == PION) {
         i = 0;
-        TabPieceProtegeRoi = EchecRoi(taille, coordonneePieceMetenEchec, echiquier, MetEnEchec, MisenEchec,
-            &tailleTab); // ici la fonction echec Roi cherche toutes les pièces de la couleur du Roi en prise
-                         // qui peuvent prendre la pièce qui met en echec le roi
+        TabPieceProtegeRoi = EchecRoi(taille, coordonneePieceMetenEchec, echiquier, MetEnEchec, MisenEchec,&tailleTab); // ici la fonction echec Roi est utilisé à l'inverse de son usage principale: c'est à dire qu'on chercher quelles pièces de la couleur du Roi mis en Echec peuvent contrer cette echec 
+                        
 
         if (TabPieceProtegeRoi != NULL) { // Finalité --> dire si une pièce de la couleur du ROI peut prendre la pièce en question
             tmp = echiquier[yp][xp];
@@ -692,8 +693,8 @@ Bool EchecEtMatContre(int taille, Piece** echiquier, int coordonneePieceMetenEch
 
     if (echiquier[yp][xp].nom == TOUR) {
 
-        int h = 0; // indique le sens de déplacement ici vertical (hauteur)
-        int l = 0; // horizontal (lignes);
+        int h = 0; // indique le sens de déplacement ici vertical (sur une hauteur)
+        int l = 0; // horizontal (sur une lignes);
 
         if (xp == coordonneeRoi[1]) {
 
@@ -852,9 +853,9 @@ Bool EchecEtMatContre(int taille, Piece** echiquier, int coordonneePieceMetenEch
 
     if (echiquier[yp][xp].nom == FOU) {
 
-        int dsg = 0; // diagonal supérieur gauche vat être utile pour l'écart de case entre le roi et le fou en question
+        int dsg = 0; // diagonal supérieur gauche, va être utile pour l'écart de case entre le roi et le fou en question
         int dsd = 0;
-        int dig = 0;
+        int dig = 0;//diagonal inférieur droite 
         int did = 0;
 
         if (xp - coordonneeRoi[1] < 0 && yp - coordonneeRoi[0] < 0) {

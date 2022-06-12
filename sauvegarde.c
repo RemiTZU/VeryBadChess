@@ -1,5 +1,6 @@
 #include <sauvegarde.h>
 
+/*sauvegarde.c contient toutes les fonctions destiné à la sauvegarde de l'échiquier ainsi qu'à son initialisation lors de la reprise d'une partie précédemment enregistrée*/
 
 /***********************************************************************************************************************/
 /**

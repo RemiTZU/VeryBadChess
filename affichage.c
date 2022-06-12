@@ -1,5 +1,7 @@
 #include <affichage.h>
 
+/* Affichage.c regroupe toutes les fonctions affichant quelques choses à l'utilisateur: la demande des coordonnées, le menu , l'echiquier et la partie */
+
 /***********************************************************************************************************************************************************************/
 
 /**
@@ -213,7 +215,7 @@ void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2],Couleur Joue
 /***********************************************************************************************************************************************************************/
 
 /**
- * @brief Fonction booléenne servant dans partie. Sert  à savoir si un mouvement est légal sous trois conditions : la légalité du mouvement la couleur suivant le tour et l'echec à la découverte deRoi
+ * @brief Fonction booléenne servant dans partie. Sert  à savoir si un mouvement est légal sous trois conditions : la légalité du mouvement la couleur suivant le tour et l'echec à la découverte du Roi
  *
  * @param taille -> taille de l'échiquier
  * @param CoordonneeInit --> Coordonnée de départ entrée par l'utilisateur

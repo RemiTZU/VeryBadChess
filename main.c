@@ -62,9 +62,10 @@ int main()
         break;
 
     case (2):
+        
         echiquier = LectureSauvegarde("save.txt", &taille , &tour);
         if(echiquier == NULL){
-            printf("\nAucune sauvegarde existente \n");
+            printf("\nAucune sauvegarde existente, tu pourras en lancer une quand tu sauvegarderas une prochaine partie... \n");
         }else{
             partie(taille,echiquier,tour);
             freechiquier(taille,&echiquier);
