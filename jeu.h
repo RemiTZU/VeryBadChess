@@ -20,7 +20,7 @@ void switchbase(int* abscisse, int* ordonnee, int taillechiquier);
  * @param coordonneearriver --> Coordonnée d'arriver entrée par l'utilisateur
  * @param echiquier -->  tableau de structure de pièces
  */
-void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+void Mouvement(Coord coordonneedepart, Coord coordonneearriver, Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'un Fou
@@ -30,7 +30,7 @@ void Mouvement(int coordonneedepart[2], int coordonneearriver[2], Piece** echiqu
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool--> indique si le coup est possible ou non
  */
-Bool FouVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool FouVerification(Coord coordonneedepart, Coord coordonneearriver, Piece** echiquier);
 
 /**
  * @brief Fonction se répettant dans FouVerification
@@ -53,7 +53,7 @@ Bool VerificationFou(int i, int y, int y0, int x, int x0, Piece** echiquier);
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool--> indique si le coup est possible ou non
  */
-Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool CavalierVerification(Coord coordonneedepart, Coord coordonneearriver, Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'une tour
@@ -63,7 +63,7 @@ Bool CavalierVerification(int coordonneedepart[2], int coordonneearriver[2], Pie
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
  */
-Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool TourVerification(Coord coordonneedepart, Coord coordonneearriver, Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'un Pion
@@ -75,7 +75,7 @@ Bool TourVerification(int coordonneedepart[2], int coordonneearriver[2], Piece**
  * @return Bool --> indique si le coup est possible ou non
 
  */
-Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int taille, Piece** echiquier);
+Bool PionVerification(Coord coordonneedepart, Coord coordonneearriver, int taille, Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'un Roi
@@ -85,7 +85,7 @@ Bool PionVerification(int coordonneedepart[2], int coordonneearriver[2], int tai
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
  */
-Bool RoiVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool RoiVerification(Coord coordonneedepart, Coord coordonneearriver, Piece** echiquier);
 
 /**
  * @brief Verification des mouvements d'une Reine
@@ -95,7 +95,7 @@ Bool RoiVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** 
  * @param echiquier -->  tableau de structure de pièces
  * @return Bool --> indique si le coup est possible ou non
  */
-Bool DameVerification(int coordonneedepart[2], int coordonneearriver[2], Piece** echiquier);
+Bool DameVerification(Coord coordonneedepart, Coord coordonneearriver, Piece** echiquier);
 
 /**
  * @brief Donne la position du Roi à l'instant t
@@ -105,7 +105,7 @@ Bool DameVerification(int coordonneedepart[2], int coordonneearriver[2], Piece**
  * @param taille--> taille de l'échiquier (6 x 6 par exemple)
  * @param echiquier --> Structure de Piece
  */
-void PositionRoi(int CoordonneeRoi[2], Couleur Roi, int taille, Piece** echiquier);
+void PositionRoi(Coord CoordonneeRoi, Couleur Roi, int taille, Piece** echiquier);
 
 /**
  * @brief Fonction utile pour la fonction EchecRoi, regroupe les mouvements de toutes les pièces
@@ -116,7 +116,7 @@ void PositionRoi(int CoordonneeRoi[2], Couleur Roi, int taille, Piece** echiquie
  * @param echiquier -->  Structure de Piece
  * @return Bool --> Indique si le roi est en echec par la pièce concernée
  */
-Bool MouvementPieceEchec(int taille, int coordonnee[2], int coordonneeRoi[2], Piece** echiquier);
+Bool MouvementPieceEchec(int taille, Coord coordonnee, Coord coordonneeRoi, Piece** echiquier);
 
 /**
  * @brief Fonction qui indique si le roi d'une couleur (NOIR ou BLANC) est en échec à un moment donné
@@ -127,9 +127,9 @@ Bool MouvementPieceEchec(int taille, int coordonnee[2], int coordonneeRoi[2], Pi
  * @param MiseEnEchec --> Couleur du Roi mis en échec potentiel
  * @param MetEnEchec --> Couleur de la pièce qui met en échec
  * @param tailleTabtmp --> Tailledu Tableau qui met en echec le roi
- * @return int** --> tableau de deux dimensions de int qui contient les coordonnées de chaque pièce mettant en échec le roi
+ * @return Coord* --> tableau de coordonnées de chaque pièce mettant en échec le roi
  */
-int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int* tailleTabtmp);
+Coord* EchecRoi(int taille, Coord CoordonneeRoi, Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int* tailleTabtmp);
 
 /**
  * @brief Fonction servant dans EchecEtMat et dans le main -->indique si le Roi est bloqué à  sa place ou peut se déplacer en cas d'echec
@@ -141,7 +141,7 @@ int** EchecRoi(int taille, int CoordonneeRoi[2], Piece** echiquier, Couleur Mise
  * @param echiquier -->  Structure de Piece
  * @return Bool --> Ressort Vrai si le roi peut se déplacer, l'inverse sinon
  */
-Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
+Bool RoiMouvementElementaire(int taille, Coord CoordonneRoi, Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
 
 /**
  * @brief Fonction utile dans EchecEtMat, sert à  savoir si oui ou non le Roi peut être protéger par ses coéquipiers
@@ -154,7 +154,7 @@ Bool RoiMouvementElementaire(int taille, int CoordonneRoi[2], Couleur MiseEnEche
  * @param coordonneeRoi --> Coordonnées du Roi qui est en echec
  * @return Bool --> ressort vrai si le contre est possible
  */
-Bool EchecEtMatContre(int taille, Piece** echiquier, int coordonneePieceMetenEchec[2], Couleur MetEnEchec, Couleur MisenEchec, int coordonneeRoi[2]);
+Bool EchecEtMatContre(int taille, Piece** echiquier, Coord coordonneePieceMetenEchec, Couleur MetEnEchec, Couleur MisenEchec, Coord coordonneeRoi);
 
 /**
  * @brief Fonction primordiale pour la boucle de jeu
@@ -166,7 +166,7 @@ Bool EchecEtMatContre(int taille, Piece** echiquier, int coordonneePieceMetenEch
  * @param echiquier -->  Structure de Piece
  * @return Bool --> ressort VRAI si le roi est en echec et mat
  */
-Bool EchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
+Bool EchecEtMat(int taille, Coord CoordonneRoi, Couleur MiseEnEchec, Couleur MetEnEchec, Piece** echiquier);
 
 /**
  * @brief free des tableaux à deux dimensions mallocer
@@ -174,6 +174,6 @@ Bool EchecEtMat(int taille, int CoordonneRoi[2], Couleur MiseEnEchec, Couleur Me
  * @param tab --> tableau de deux dimension d'entiers
  * @param tailleTab--> taille du tableau (première dimension)
  */
-void freeTab(int*** tab, int tailleTab);
+void freeTab(Coord** tab, int tailleTab);
 
 #endif

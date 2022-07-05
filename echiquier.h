@@ -41,6 +41,12 @@ typedef struct
 
 } Piece;
 
+typedef struct
+{
+    short x;
+    short y;
+} Coord;
+
 /**
  * @brief Initialise un echiquier de la taille choisit
  *

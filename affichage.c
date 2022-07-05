@@ -9,9 +9,9 @@
  * permettant ainsi des manipulations avec le tableau de structure de l'échiquier
  *
  * @param taille --> Taille de l'échiquier
- * @param coordonnee --> Tableau d'entiers représentant les indexs du tableau de structure(format: ligne-colonne)
+ * @param coord --> Structure représentant les indexs du tableau de structure(format: ligne-colonne)
  */
-void acquisitioncoordonnees(int taille, int coordonnee[2])
+void acquisitioncoordonnees(int taille, Coord *coord)
 {
     char rep[50];
     char abcissetmp;
@@ -38,8 +38,8 @@ void acquisitioncoordonnees(int taille, int coordonnee[2])
     abcisse = abcissetmp;
     switchbase(&abcisse, &ordonne, taille);
 
-    coordonnee[0] = ordonne;
-    coordonnee[1] = abcisse;
+    coord->y = ordonne;
+    coord->x = abcisse;
 }
 
 /***********************************************************************************************************************************************************************/
@@ -198,7 +198,7 @@ void menu()
  * @param CoordonneeFinit--> Coordonnée d'arriver entrée par l'utilisateur
  * @param Joue --> couleur entrain de jouer 
  */
-void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2],Couleur Joue)
+void Coup(int taille, Coord *CoordonneeInit, Coord *CoordonneeFinit, Couleur Joue)
 {
     if(Joue == BLANC){
         printf("\nC'est au tour des BLANC de jouer\n");
@@ -226,17 +226,17 @@ void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2],Couleur Joue
  * @return Bool --> VRAI si le mouvement est légal
  */
 
-Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, int CoordonneRoi[2])
+Bool MouvementLegal(int taille, Coord CoordonneeInit, Coord CoordonneeFinit, Piece** echiquier, Couleur MiseEnEchec, Couleur MetEnEchec, Coord CoordonneRoi)
 {
 
-    int** TableauEchec;
+    Coord* TableauEchec;
     int TailleEchec = 0;
 
     Bool verif = VRAI;
     Piece tmp;
-    tmp = echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]];
+    tmp = echiquier[CoordonneeFinit.y][CoordonneeFinit.x];
 
-    switch (echiquier[CoordonneeInit[0]][CoordonneeInit[1]].nom) {
+    switch (echiquier[CoordonneeInit.y][CoordonneeInit.x].nom) {
 
     case (0):
 
@@ -262,7 +262,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
-            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+            echiquier[CoordonneeFinit.y][CoordonneeFinit.x] = tmp;
 
             return verif;
         }
@@ -284,7 +284,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
-            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+            echiquier[CoordonneeFinit.y][CoordonneeFinit.x] = tmp;
 
             return verif;
         }
@@ -304,7 +304,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
-            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+            echiquier[CoordonneeFinit.y][CoordonneeFinit.x] = tmp;
             return verif;
         }
         break;
@@ -323,7 +323,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
-            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+            echiquier[CoordonneeFinit.y][CoordonneeFinit.x] = tmp;
             return verif;
         }
         break;
@@ -343,7 +343,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
-            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+            echiquier[CoordonneeFinit.y][CoordonneeFinit.x] = tmp;
             return verif;
         }
         break;
@@ -363,7 +363,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
             verif = FAUX;
             freeTab(&TableauEchec, TailleEchec);
             Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
-            echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+            echiquier[CoordonneeFinit.y][CoordonneeFinit.x] = tmp;
             PositionRoi(CoordonneRoi, MiseEnEchec, taille, echiquier);
             return verif;
         }
@@ -371,7 +371,7 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
         break;
     }
     Mouvement(CoordonneeFinit, CoordonneeInit, echiquier);
-    echiquier[CoordonneeFinit[0]][CoordonneeFinit[1]] = tmp;
+    echiquier[CoordonneeFinit.y][CoordonneeFinit.x] = tmp;
     PositionRoi(CoordonneRoi, MiseEnEchec, taille, echiquier);
     freeTab(&TableauEchec, TailleEchec);
     return verif;
@@ -386,10 +386,10 @@ Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], P
 void partie(int taille, Piece** echiquier, int tour)
 {
 
-    int CoordonneeRoiBlanc[2];
-    int CoordonneeRoiNoir[2];
-    int coordonneeDepart[2];
-    int coordonneeArrive[2];
+    Coord CoordonneeRoiBlanc;
+    Coord CoordonneeRoiNoir;
+    Coord coordonneeDepart = (Coord){0, 0};
+    Coord coordonneeArrive = (Coord){0, 0};
     int couptotalBlanc = 0;
     int couptotalNoir = 0;
     char rep;
@@ -449,28 +449,29 @@ void partie(int taille, Piece** echiquier, int tour)
         
         if (tour % 2 == 0) {
             PositionRoi(CoordonneeRoiBlanc, BLANC, taille, echiquier);
-            Coup(taille, coordonneeDepart, coordonneeArrive,BLANC);
-            while (MouvementLegal(taille, coordonneeDepart, coordonneeArrive, echiquier, BLANC, NOIR, CoordonneeRoiBlanc) == FAUX || echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != BLANC) {
-                if (echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != BLANC) {
+            Coup(taille, &coordonneeDepart, &coordonneeArrive, BLANC);
+            while (MouvementLegal(taille, coordonneeDepart, coordonneeArrive, echiquier, BLANC, NOIR, CoordonneeRoiBlanc) == FAUX || echiquier[coordonneeDepart.y][coordonneeDepart.x].couleur != BLANC) {
+                if (echiquier[coordonneeDepart.y][coordonneeDepart.x].couleur != BLANC) {
                     printf("Vous avez s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
+                    printf("%d:%d", coordonneeDepart.y, coordonneeDepart.x);
                 }
-                Coup(taille, coordonneeDepart, coordonneeArrive,BLANC);
+                Coup(taille, &coordonneeDepart, &coordonneeArrive, BLANC);
             }
             Mouvement(coordonneeDepart, coordonneeArrive, echiquier);
-            echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
+            echiquier[coordonneeArrive.y][coordonneeArrive.x].coup++;
             couptotalBlanc++;
 
         } else {
             PositionRoi(CoordonneeRoiNoir, NOIR, taille, echiquier);
-            Coup(taille, coordonneeDepart, coordonneeArrive,NOIR);
-            while (MouvementLegal(taille, coordonneeDepart, coordonneeArrive, echiquier, NOIR, BLANC, CoordonneeRoiNoir) == FAUX || echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != NOIR) {
-                if (echiquier[coordonneeDepart[0]][coordonneeDepart[1]].couleur != NOIR) {
+            Coup(taille, &coordonneeDepart, &coordonneeArrive, NOIR);
+            while (MouvementLegal(taille, coordonneeDepart, coordonneeArrive, echiquier, NOIR, BLANC, CoordonneeRoiNoir) == FAUX || echiquier[coordonneeDepart.y][coordonneeDepart.x].couleur != NOIR) {
+                if (echiquier[coordonneeDepart.y][coordonneeDepart.x].couleur != NOIR) {
                     printf("Vous avez s%clectionn%c une pi%cce qui ne t'appartient pas ou une case vide...\n", 130, 130, 138);
                 }
-                Coup(taille, coordonneeDepart, coordonneeArrive,NOIR);
+                Coup(taille, &coordonneeDepart, &coordonneeArrive, NOIR);
             }
             Mouvement(coordonneeDepart, coordonneeArrive, echiquier);
-            echiquier[coordonneeArrive[0]][coordonneeArrive[1]].coup++;
+            echiquier[coordonneeArrive.y][coordonneeArrive.y].coup++;
             couptotalNoir++;
         }
         tour++;

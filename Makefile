@@ -57,8 +57,8 @@ $(LIBTARGET): $(LIBSOURCEOFILE)
 
 #Cleaning the content of the current directory
 clean:
-	@echo "\n Cleaning temporary files"
-	DEL /q /s *.o *.dll *.exe
+	@del /q /s *.o *.dll *.exe
+	@echo CLEAN
 
 	
 

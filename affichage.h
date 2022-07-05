@@ -10,9 +10,9 @@
  * permettant ainsi des manipulations avec le tableau de structure de l'échiquier
  *
  * @param taille --> Taille de l'échiquier
- * @param coordonnee --> Tableau d'entiers représentant les indexs du tableau de structure(format: ligne-colonne)
+ * @param coord --> Structure représentant les indexs du tableau de structure(format: ligne-colonne)
  */
-void acquisitioncoordonnees(int taille, int coordonnee[2]);
+void acquisitioncoordonnees(int taille, Coord *coord);
 
 /**
  * @brief Fonction qui rempli le menu de caractère ASCII de notre choix
@@ -53,7 +53,7 @@ void menu();
  * @param CoordonneeFinit--> Coordonnée d'arriver entrée par l'utilisateur*
  * @param Joue --> couleur entrain de jouer 
  */
-void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2],Couleur Joue);
+void Coup(int taille, Coord *CoordonneeInit, Coord *CoordonneeFinit, Couleur Joue);
 
 /**
  * @brief Fonction booléenne servant dans partie. Sert  à savoir si un mouvement est légal sous trois conditions : la légalité du mouvement la couleur suivant le tour et l'echec à la découverte deRoi
@@ -66,7 +66,7 @@ void Coup(int taille, int CoordonneeInit[2], int CoordonneeFinit[2],Couleur Joue
  * @param CoordonneRoi--> Coordonnées du Roi qui peut être en échec
  * @return Bool --> VRAI si le mouvement est légal
  */
-Bool MouvementLegal(int taille, int CoordonneeInit[2], int CoordonneeFinit[2], Piece** echiquier, Couleur MisenEchec, Couleur MetEnEchec, int CoordonneRoi[2]);
+Bool MouvementLegal(int taille, Coord CoordonneeInit, Coord CoordonneeFinit, Piece** echiquier, Couleur MisenEchec, Couleur MetEnEchec, Coord CoordonneRoi);
 
 /**
  * @brief Assure le bon déroulement d'une partie de Very Bad CHess
