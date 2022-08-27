@@ -9,7 +9,7 @@
  * permettant ainsi des manipulations avec le tableau de structure de l'échiquier
  *
  * @param taille --> Taille de l'échiquier
- * @param coord --> Structure représentant les indexs du tableau de structure(format: ligne-colonne)
+ * @param coord --> Structure représentant les indexs du tableau de structure(format: ligne-colonne).
  */
 void acquisitioncoordonnees(int taille, Coord *coord)
 {
